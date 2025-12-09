@@ -1,0 +1,63 @@
+{
+  "Next.js Page": {
+    "prefix": "next-page",
+    "body": [
+      "export default function ${1:PageName}() {",
+      "  return (",
+      "    <div>",
+      "      <h1>${2:Page Title}</h1>",
+      "      ${3:// Page content}",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "Next.js page component"
+  },
+  "Next.js API Route": {
+    "prefix": "next-api",
+    "body": [
+      "import { NextRequest, NextResponse } from 'next/server'",
+      "",
+      "export async function ${1:GET}(request: NextRequest) {",
+      "  try {",
+      "    ${2:// API logic}",
+      "    return NextResponse.json({ message: 'Success' })",
+      "  } catch (error) {",
+      "    return NextResponse.json({ error: error.message }, { status: 500 })",
+      "  }",
+      "}"
+    ],
+    "description": "Next.js API route"
+  },
+  "Prisma Query": {
+    "prefix": "prisma-query",
+    "body": [
+      "const ${1:result} = await db.${2:model}.findMany({",
+      "  where: {",
+      "    ${3:field}: ${4:value}",
+      "  },",
+      "  include: {",
+      "    ${5:relation}: true,",
+      "  },",
+      "})"
+    ],
+    "description": "Prisma database query"
+  },
+  "React Component": {
+    "prefix": "react-component",
+    "body": [
+      "interface ${1:ComponentName}Props {",
+      "  ${2:// props}",
+      "}",
+      "",
+      "export default function ${1:ComponentName}({ ${3:props} }: ${1:ComponentName}Props) {",
+      "  return (",
+      "    <div className=\"${4:className}\">",
+      "      ${5:// Component content}",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "React component with TypeScript"
+  }
+}
