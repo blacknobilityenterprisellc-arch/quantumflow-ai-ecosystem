@@ -9,7 +9,11 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "export": "next export"
+    "export": "next export",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
   },
   "keywords": [
     "quantum-ai",
@@ -22,11 +26,17 @@
   "author": "Jocely P. Honore",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^7.1.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.4.22",
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
     "next": "16.0.8",
+    "postcss": "^8.5.6",
+    "prisma": "^7.1.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "tailwindcss": "^4.1.17",
     "typescript": "5.9.3"
   },
   "devDependencies": {
