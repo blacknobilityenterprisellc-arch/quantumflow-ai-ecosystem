@@ -1,7 +1,7 @@
 {
   "name": "quantumflow-ai-ecosystem",
-  "version": "15.3.0",
-  "description": "🚀 QuantumFlow AI Ecosystem v15.3.0 - Premium Platinum Diamond Grade - Next.js 16.0.8 with Quantum Intelligence",
+  "version": "15.4.0",
+  "description": "🚀 QuantumFlow AI Ecosystem v15.4.0 - Premium Platinum Diamond Grade - Next.js 16.0.8 with Quantum Intelligence - AETHERIUS-PRIME Enhanced",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
@@ -30,17 +30,19 @@
     "@tailwindcss/typography": "^0.5.19",
     "autoprefixer": "^10.4.22",
     "chalk": "^5.6.2",
+    "clsx": "^2.1.1",
     "commander": "^14.0.2",
     "next": "16.0.8",
     "postcss": "^8.5.6",
     "prisma": "^7.1.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
     "typescript": "5.9.3"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^24.10.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
