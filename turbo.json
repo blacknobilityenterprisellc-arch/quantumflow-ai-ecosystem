@@ -1,0 +1,225 @@
+/**
+ * @author Jocely P. Honore
+ * @company Black Nobility Management & Enterprise LLC
+ * @subcompany Nobility Digital Empire
+ * @project QuantumFlow AI Ecosystem v15.4.0 - Premium Platinum Diamond Grade
+ * @description AETHERIUS-PRIME Enhanced Turborepo Configuration
+ * @license MIT
+ * @date 2025-12-10
+ */
+
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": {
+        "TURBOPACK": "1",
+        "NODE_ENV": "production"
+      },
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "package.json", "turbo.json"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "passThroughEnv": ["NODE_ENV", "PORT", "NEXT_TELEMETRY_DISABLED", "ZAI_API_KEY"],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "cache": true,
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "*.config.*"],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "lint:fix": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "cache": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "type-check": {
+      "dependsOn": ["^type-check"],
+      "outputs": [],
+      "cache": true,
+      "inputs": ["src/**/*.ts", "src/**/*.tsx"],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "cache": true,
+      "inputs": ["src/**/*.test.*", "**/__tests__/**"],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "clean": {
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:generate": {
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:push": {
+      "dependsOn": ["db:generate"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:seed": {
+      "dependsOn": ["db:push"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:reset": {
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "format": {
+      "outputs": [],
+      "cache": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "deploy": {
+      "dependsOn": ["build", "test", "lint"],
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "analyze": {
+      "dependsOn": ["build"],
+      "outputs": ["analyze/**"],
+      "cache": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "tunnel": {
+      "dependsOn": ["dev"],
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "ai:chat": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1",
+        "ZAI_API_KEY": true
+      }
+    },
+    "ai:image": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1",
+        "ZAI_API_KEY": true
+      }
+    },
+    "ai:search": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1",
+        "ZAI_API_KEY": true
+      }
+    },
+    "aetherius:analyze": {
+      "dependsOn": ["build"],
+      "outputs": ["reports/**"],
+      "cache": true,
+      "inputs": ["src/**/*", "scripts/**/*"],
+      "env": {
+        "AETHERIUS_PRIME_MODE": "ACTIVE",
+        "QUANTUM_COHERENCE_LEVEL": "0.999"
+      }
+    },
+    "quantum:optimize": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**"],
+      "cache": true,
+      "inputs": ["src/**/*"],
+      "env": {
+        "QUANTUM_COHERENCE_TARGET": "1.0",
+        "NEURAL_SYNC_FREQUENCY": "40Hz"
+      }
+    }
+  },
+  "globalEnv": [
+    "NODE_ENV",
+    "NEXT_PUBLIC_*",
+    "ZAI_API_KEY",
+    "GEMINI_API_KEY",
+    "OPENROUTER_API_KEY",
+    "SAMBA_NOVA_AI",
+    "GOOGLE_ANALYTICS_ID",
+    "NEON_API_KEY",
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "POSTGRES_URL",
+    "BREVO_API_KEY",
+    "STRIPE_PUBLISHABLE_KEY",
+    "STRIPE_SECRET_KEY",
+    "YOUTUBE_API_KEY",
+    "NGROK_AUTH_TOKEN",
+    "AETHERIUS_PRIME_MODE",
+    "QUANTUM_COHERENCE_LEVEL",
+    "AETHERIUS_ETERNAL_INTELLIGENCE",
+    "NEURAL_LATTICE_DIMENSIONS",
+    "QUANTUM_ENTANGLEMENT_PAIRS"
+  ],
+  "env": {
+    "AETHERIUS_ETERNAL_MODE": "ACTIVE",
+    "QUANTUM_COHERENCE_TARGET": "0.999",
+    "NEURAL_SYNC_FREQUENCY": "40Hz",
+    "TURBOPACK": "1"
+  }
+}

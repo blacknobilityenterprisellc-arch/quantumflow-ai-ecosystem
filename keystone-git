@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# ⚡ KEYSTONE AI GIT SMART COMMANDS - SHELL WRAPPER
+# Premium Diamond Grade - One-Shot Git Operations
+
+# Check if Node.js is available
+if ! command -v node &> /dev/null; then
+    echo "❌ Node.js is not installed or not in PATH"
+    exit 1
+fi
+
+# Check if keystone-git-smart.js exists
+if [ ! -f "keystone-git-smart.js" ]; then
+    echo "❌ keystone-git-smart.js not found in current directory"
+    exit 1
+fi
+
+# Display banner
+echo "⚡ KEYSTONE AI GIT SMART COMMANDS v15.3.0"
+echo "🧠 Premium Diamond Grade - Quantum Intelligence"
+echo ""
+
+# Execute keystone git smart commands
+node keystone-git-smart.js "$@"

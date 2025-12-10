@@ -1,0 +1,83 @@
+{
+  "name": "quantumflow-ai-ecosystem",
+  "version": "15.4.0",
+  "description": "🚀 QuantumFlow AI Ecosystem v15.4.0 - Premium Platinum Diamond Grade - Next.js 16.0.8 with Quantum Intelligence - AETHERIUS-PRIME Enhanced",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "export": "next export",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "keywords": [
+    "quantum-ai",
+    "nextjs",
+    "typescript",
+    "enterprise",
+    "premium",
+    "platinum-diamond"
+  ],
+  "author": "Jocely P. Honore",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^7.1.0",
+    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/pg": "^8.15.6",
+    "@types/redis": "^4.0.11",
+    "autoprefixer": "^10.4.22",
+    "bcryptjs": "^3.0.3",
+    "chalk": "^5.6.2",
+    "clsx": "^2.1.1",
+    "commander": "^14.0.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.556.0",
+    "next": "16.0.8",
+    "pg": "^8.16.3",
+    "postcss": "^8.5.6",
+    "prisma": "^7.1.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "redis": "^5.10.0",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.17",
+    "typescript": "5.9.3",
+    "z-ai-web-dev-sdk": "^0.0.11"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@octokit/rest": "^20.1.2",
+    "@types/node": "^24.10.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "16.0.8",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "retire": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blacknobilityenterprisellc-arch/quantumflow-ai-ecosystem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blacknobilityenterprisellc-arch/quantumflow-ai-ecosystem/issues"
+  },
+  "homepage": "https://github.com/blacknobilityenterprisellc-arch/quantumflow-ai-ecosystem#readme"
+}
