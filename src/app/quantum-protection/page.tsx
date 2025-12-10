@@ -3,7 +3,7 @@
 
 'use client';
 
-import { QuantumProtectionDashboard } from '@/components/QuantumProtectionDashboard';
+import { QuantumProtectionDashboard } from '../../components/QuantumProtectionDashboard';
 
 export default function QuantumProtectionPage() {
   return (

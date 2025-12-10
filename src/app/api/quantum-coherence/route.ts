@@ -31,7 +31,7 @@ export async function GET() {
       data: {
         coherence,
         status,
-        metrics,
+        metrics: status.metrics,
         message: '🧠 QUANTUM COHERENCE 1.0 ACHIEVED',
         timestamp: new Date().toISOString(),
         quantumId: `quantum_coherence_${Date.now()}`

@@ -6,11 +6,11 @@ import { quantumProtectionIntegration } from '../lib/quantum-protection-integrat
 
 // 🛡️ Quantum Protection Hook
 export const useQuantumProtection = () => {
-  const [protectionStatus, setProtectionStatus] = useState(null);
-  const [metrics, setMetrics] = useState(null);
-  const [healthReport, setHealthReport] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [logs, setLogs] = useState([]);
+  const [protectionStatus, setProtectionStatus] = useState<any>(null);
+  const [metrics, setMetrics] = useState<any>(null);
+  const [healthReport, setHealthReport] = useState<any>(null);
+  const [history, setHistory] = useState<any[]>([]);
+  const [logs, setLogs] = useState<any[]>([]);
   
   // 🎯 Update protection state
   const updateProtectionStatus = useCallback(() => {
@@ -90,17 +90,17 @@ export const useQuantumProtection = () => {
     }
     
     const health = healthReport?.health?.overall || 'unknown';
-    const coherence = metrics?.currentCoherence || 0;
+    const currentCoherence = metrics?.currentCoherence || 0;
     
-    if (health === 'excellent' && coherence >= 1.0) {
+    if (health === 'excellent' && currentCoherence >= 1.0) {
       return 'Optimal';
     }
     
-    if (health === 'good' && coherence >= 0.999) {
+    if (health === 'good' && currentCoherence >= 0.999) {
       return 'Healthy';
     }
     
-    if (health === 'fair' && coherence >= 0.995) {
+    if (health === 'fair' && currentCoherence >= 0.995) {
       return 'Degraded';
     }
     
@@ -116,7 +116,7 @@ export const useQuantumProtection = () => {
     if (!healthReport) return [];
     
     const health = healthReport?.health || { overall: 'unknown' };
-    const metrics = metrics || {};
+    const currentMetrics = metrics || {};
     
     const recommendations = [];
     
@@ -142,7 +142,7 @@ export const useQuantumProtection = () => {
       recommendations.push('Implement redundancy measures');
     }
     
-    if (metrics.degradationRate > 0.001) {
+    if (currentMetrics.degradationRate > 0.001) {
       recommendations.push('Investigate degradation causes');
       recommendations.push('Implement preventive measures');
     }
@@ -155,17 +155,17 @@ export const useQuantumProtection = () => {
     if (!healthReport) return 'info';
     
     const health = healthReport?.health?.overall || 'unknown';
-    const coherence = metrics?.currentCoherence || 0;
+    const currentCoherence = metrics?.currentCoherence || 0;
     
-    if (health === 'critical' || coherence < 0.99) {
+    if (health === 'critical' || currentCoherence < 0.99) {
       return 'critical';
     }
     
-    if (health === 'poor' || coherence < 0.995) {
+    if (health === 'poor' || currentCoherence < 0.995) {
       return 'warning';
     }
     
-    if (health === 'fair' || coherence < 0.999) {
+    if (health === 'fair' || currentCoherence < 0.999) {
       return 'caution';
     }
     

@@ -45,12 +45,15 @@ export class QuantumCoherenceOptimizer extends EventEmitter {
   constructor(config: Partial<QuantumCoherenceConfig> = {}) {
     super();
     
+    this.metrics = this.initializeMetrics();
+    this.algorithms = this.initializeAlgorithms();
+    
     this.config = {
       targetCoherence: 1.0,
       toleranceThreshold: 0.999,
       optimizationInterval: 30000,
-      coherenceMetrics: this.initializeMetrics(),
-      quantumAlgorithms: this.initializeAlgorithms(),
+      coherenceMetrics: this.metrics,
+      quantumAlgorithms: this.algorithms,
       ...config
     };
     

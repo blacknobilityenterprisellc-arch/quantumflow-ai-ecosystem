@@ -8,9 +8,9 @@ import { quantumCoherenceIntegration } from '../lib/quantum-coherence-integratio
 export const useQuantumCoherence = () => {
   const [coherence, setCoherence] = useState(1.0);
   const [isOptimizing, setIsOptimizing] = useState(false);
-  const [metrics, setMetrics] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [logs, setLogs] = useState([]);
+  const [metrics, setMetrics] = useState<any>(null);
+  const [history, setHistory] = useState<any[]>([]);
+  const [logs, setLogs] = useState<any[]>([]);
   
   // 🎯 Update coherence state
   const updateCoherence = useCallback(() => {

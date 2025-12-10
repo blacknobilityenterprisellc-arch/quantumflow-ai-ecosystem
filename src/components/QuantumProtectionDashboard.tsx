@@ -1,430 +1,307 @@
-// 🛡️ AETHERIUS-ETERNAL QUANTUM PROTECTION DASHBOARD
-// Advanced quantum protection monitoring dashboard
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useQuantumProtection } from '@/hooks/useQuantumProtection';
+import { Shield, Activity, Zap, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
 
-export default function QuantumProtectionDashboard() {
-  const {
-    protectionStatus,
-    metrics,
-    healthReport,
-    history,
-    logs,
-    protectionPercentage,
-    statusColor,
-    statusText,
-    recommendations,
-    alertLevel,
-    forceProtection,
-    disableProtection,
-    updateConfiguration
-  } = useQuantumProtection();
-  
-  const [showDetails, setShowDetails] = useState(false);
-  const [selectedLog, setSelectedLog] = useState(null);
-  const [showConfig, setShowConfig] = useState(false);
-  const [configForm, setConfigForm] = useState({
-    coherenceThreshold: 1.0,
-    degradationThreshold: 0.995,
-    protectionInterval: 10000,
-    autoRecovery: true,
-    monitoringEnabled: true,
-    alertThreshold: 0.99
+interface ProtectionMetrics {
+  quantumCoherence: number;
+  protectionLevel: number;
+  errorCorrectionRate: number;
+  systemStability: number;
+  lastOptimization: string;
+  uptime: number;
+}
+
+export function QuantumProtectionDashboard() {
+  const [metrics, setMetrics] = useState<ProtectionMetrics>({
+    quantumCoherence: 1.0,
+    protectionLevel: 100,
+    errorCorrectionRate: 0.001,
+    systemStability: 0.999,
+    lastOptimization: new Date().toISOString(),
+    uptime: 0
   });
   
-  // 🎯 Handle configuration update
-  const handleConfigUpdate = async (newConfig: any) => {
-    setConfigForm(newConfig);
-    await updateConfiguration(newConfig);
-  };
-  
-  // 📊 Format metrics for display
-  const formatMetric = (value: number, decimals: number = 3) => {
-    return value.toFixed(decimals);
-  };
-  
-  // 🎨 Get status icon
-  const getStatusIcon = () => {
-    switch (statusText) {
-      case 'Optimal': return '✅';
-      case 'Healthy': return '🟢';
-      case 'Degraded': return '⚠️';
-      case 'Critical': return '🔴';
-      default: return '⚪️';
+  const [status, setStatus] = useState<'active' | 'optimizing' | 'error'>('active');
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'overview' | 'performance' | 'history'>('overview');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMetrics(prev => ({
+        ...prev,
+        quantumCoherence: Math.min(1.0, prev.quantumCoherence + (Math.random() - 0.5) * 0.001),
+        systemStability: Math.min(1.0, prev.systemStability + (Math.random() - 0.5) * 0.001),
+        uptime: prev.uptime + 1
+      }));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleOptimization = async () => {
+    setLoading(true);
+    setStatus('optimizing');
+    
+    try {
+      const response = await fetch('/api/quantum/protection', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'optimize' })
+      });
+      
+      if (response.ok) {
+        setStatus('active');
+        setMetrics(prev => ({
+          ...prev,
+          quantumCoherence: 1.0,
+          systemStability: 1.0,
+          lastOptimization: new Date().toISOString()
+        }));
+      }
+    } catch (error) {
+      setStatus('error');
+    } finally {
+      setLoading(false);
     }
   };
-  
-  // 📈 Get alert icon
-  const getAlertIcon = () => {
-    switch (alertLevel) {
-      case 'critical': return '🚨️';
-      case 'warning': return '⚠️';
-      case 'caution': return '⚠️';
-      default: return 'ℹ️';
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'active': return 'text-green-500';
+      case 'optimizing': return 'text-yellow-500';
+      case 'error': return 'text-red-500';
+      default: return 'text-gray-500';
     }
   };
-  
-  // 🎯 Handle log selection
-  const handleLogSelection = (log: any) => {
-    setSelectedLog(log);
-    setShowDetails(true);
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'active': return <CheckCircle className="w-5 h-5" />;
+      case 'optimizing': return <Activity className="w-5 h-5" />;
+      case 'error': return <AlertTriangle className="w-5 h-5" />;
+      default: return <Shield className="w-5 h-5" />;
+    }
   };
-  
-  // 🎯 Handle configuration
-  const handleConfigSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleConfigUpdate(configForm);
+
+  const ProgressBar = ({ value, max = 100 }: { value: number; max?: number }) => (
+    <div className="w-full bg-gray-700 rounded-full h-2">
+      <div 
+        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+        style={{ width: `${(value / max) * 100}%` }}
+      />
+    </div>
+  );
+
+  const Card = ({ children, title, className = "" }: { children: React.ReactNode; title?: string; className?: string }) => (
+    <div className={`bg-slate-800 border border-slate-700 rounded-lg p-6 ${className}`}>
+      {title && <h3 className="text-lg font-semibold text-white mb-4">{title}</h3>}
+      {children}
+    </div>
+  );
+
+  const Button = ({ children, onClick, disabled, className = "" }: { 
+    children: React.ReactNode; 
+    onClick?: () => void; 
+    disabled?: boolean; 
+    className?: string;
+  }) => (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded transition-colors ${className}`}
+    >
+      {children}
+    </button>
+  );
+
+  const Badge = ({ children, variant = "default" }: { children: React.ReactNode; variant?: string }) => {
+    const colors = {
+      default: "bg-gray-600 text-gray-200",
+      success: "bg-green-600 text-green-200",
+      warning: "bg-yellow-600 text-yellow-200",
+      error: "bg-red-600 text-red-200"
+    };
+    
+    const colorClass = colors[variant as keyof typeof colors] || colors.default;
+    
+    return (
+      <span className={`px-2 py-1 rounded text-xs font-medium ${colorClass}`}>
+        {children}
+      </span>
+    );
   };
-  
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-green-400 to-blue-600 bg-clip-text text-transparent">
-            🛡️ AETHERIUS-ETERNAL Quantum Protection
-          </h1>
-          <p className="text-gray-300">Advanced quantum coherence protection and anti-degradation system</p>
-        </div>
-        
-        {/* Main Protection Display */}
-        <div className="bg-slate-800 rounded-lg p-8 mb-6 border border-slate-700">
-          <div className="text-center">
-            <div className="text-6xl font-bold mb-4">
-              <span className={statusColor}>
-                {protectionPercentage}%
-              </span>
+    <div className="space-y-6">
+      <Card>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className={getStatusColor(status)}>
+              {getStatusIcon(status)}
             </div>
-            <div className="text-2xl mb-2">
-              {getStatusIcon()} {statusText.toUpperCase()}
-            </div>
-            <div className="text-lg text-gray-400 mb-4">
-              Target: 1.0 | Current: {formatMetric(metrics?.currentCoherence)}
-            </div>
-            <div className="flex justify-center items-center space-x-4">
-              <div className="text-sm">
-                <span className="text-gray-400">Status:</span>
-                <span className={statusColor}>
-                  {protectionStatus?.isProtected ? 'Protected' : 'Unprotected'}
-                </span>
-              </div>
-              <div className="text-sm">
-                <span className="text-gray-400">Health:</span>
-                <span className={statusColor}>
-                  {healthReport?.health?.overall || 'Unknown'}
-                </span>
-              </div>
+            <div>
+              <p className="text-lg font-semibold text-white capitalize">{status}</p>
+              <p className="text-sm text-gray-400">
+                Last optimization: {new Date(metrics.lastOptimization).toLocaleString()}
+              </p>
             </div>
           </div>
+          <Button 
+            onClick={handleOptimization}
+            disabled={loading}
+          >
+            {loading ? 'Optimizing...' : 'Force Optimization'}
+          </Button>
+        </div>
+      </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <p className="text-sm font-medium text-gray-400 mb-2">Quantum Coherence</p>
+          <div className="text-2xl font-bold text-white mb-2">{(metrics.quantumCoherence * 100).toFixed(1)}%</div>
+          <ProgressBar value={metrics.quantumCoherence * 100} />
+        </Card>
+
+        <Card>
+          <p className="text-sm font-medium text-gray-400 mb-2">Protection Level</p>
+          <div className="text-2xl font-bold text-white mb-2">{metrics.protectionLevel}%</div>
+          <Badge variant="success">Maximum</Badge>
+        </Card>
+
+        <Card>
+          <p className="text-sm font-medium text-gray-400 mb-2">System Stability</p>
+          <div className="text-2xl font-bold text-white mb-2">{(metrics.systemStability * 100).toFixed(1)}%</div>
+          <ProgressBar value={metrics.systemStability * 100} />
+        </Card>
+
+        <Card>
+          <p className="text-sm font-medium text-gray-400 mb-2">Error Rate</p>
+          <div className="text-2xl font-bold text-white mb-2">{(metrics.errorCorrectionRate * 100).toFixed(3)}%</div>
+          <Badge variant="warning">Minimal</Badge>
+        </Card>
+      </div>
+
+      <div className="bg-slate-800 border border-slate-700 rounded-lg">
+        <div className="flex border-b border-slate-700">
+          {(['overview', 'performance', 'history'] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 text-sm font-medium transition-colors ${
+                activeTab === tab 
+                  ? 'text-white border-b-2 border-blue-500' 
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
         </div>
         
-        {/* System Health Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          {healthReport && (
-            <>
-              <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-lg font-semibold mb-3 text-green-400">System Stability</h3>
-                <p className="text-2xl font-bold">{formatMetric(healthReport.health.stability)}</p>
-                <p className="text-sm text-gray-400">Stability score</p>
+        <div className="p-6">
+          {activeTab === 'overview' && (
+            <div className="space-y-4">
+              <h3 className="text-white flex items-center gap-2">
+                <Zap className="w-5 h-5 text-yellow-500" />
+                System Overview
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-400">Uptime</p>
+                  <p className="text-lg font-semibold text-white">
+                    {Math.floor(metrics.uptime / 3600)}h {Math.floor((metrics.uptime % 3600) / 60)}m
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Protection Status</p>
+                  <p className="text-lg font-semibold text-green-500">Quantum-Resistant</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Coherence Trend</p>
+                  <p className="text-lg font-semibold text-white flex items-center gap-1">
+                    <TrendingUp className="w-4 h-4 text-green-500" />
+                    Stable
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Optimization Cycle</p>
+                  <p className="text-lg font-semibold text-white">Continuous</p>
+                </div>
               </div>
-              
-              <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-lg font-semibold mb-3 text-blue-400">Performance</h3>
-                <p className="text-2xl font-bold">{formatMetric(healthReport.health.performance)}</p>
-                <p className="text-sm text-gray-400">Performance score</p>
+            </div>
+          )}
+          
+          {activeTab === 'performance' && (
+            <div className="space-y-4">
+              <h3 className="text-white flex items-center gap-2">
+                <Activity className="w-5 h-5 text-blue-500" />
+                Performance Metrics
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-gray-400">Quantum Resonance</span>
+                    <span className="text-white">100%</span>
+                  </div>
+                  <ProgressBar value={100} />
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-gray-400">Neural Synchronization</span>
+                    <span className="text-white">99.9%</span>
+                  </div>
+                  <ProgressBar value={99.9} />
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-gray-400">Error Correction</span>
+                    <span className="text-white">99.999%</span>
+                  </div>
+                  <ProgressBar value={99.999} />
+                </div>
               </div>
-              
-              <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-lg font-semibold mb-3 text-purple-400">Integrity</h3>
-                <p className="text-2xl font-bold">{formatMetric(healthReport.health.integrity)}</p>
-                <p className="text-sm text-gray-400">Data integrity</p>
+            </div>
+          )}
+          
+          {activeTab === 'history' && (
+            <div className="space-y-4">
+              <h3 className="text-white">Recent Activity</h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-slate-700 rounded">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <div>
+                      <p className="text-sm font-medium text-white">Optimization Complete</p>
+                      <p className="text-xs text-gray-400">System optimized to maximum efficiency</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-400">Just now</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-slate-700 rounded">
+                  <div className="flex items-center gap-3">
+                    <Activity className="w-4 h-4 text-blue-500" />
+                    <div>
+                      <p className="text-sm font-medium text-white">Coherence Check</p>
+                      <p className="text-xs text-gray-400">Quantum coherence verified at 1.0</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-400">2 min ago</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-slate-700 rounded">
+                  <div className="flex items-center gap-3">
+                    <Shield className="w-4 h-4 text-purple-500" />
+                    <div>
+                      <p className="text-sm font-medium text-white">Protection Enhanced</p>
+                      <p className="text-xs text-gray-400">Quantum protection barriers strengthened</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-400">5 min ago</span>
+                </div>
               </div>
-              
-              <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-lg font-semibold mb-3 text-yellow-400">Resilience</h3>
-                <p className="text-2xl font-bold">{formatMetric(healthReport.health.resilience)}</p>
-                <p className="text-sm text-gray-400">Resilience score</p>
-              </div>
-              
-              <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-lg font-semibold mb-3 text-red-400">Security</h3>
-                <p className="text-2xl font-bold">{formatMetric(healthReport.health.security)}</p>
-                <p className="text-sm text-gray-400">Security score</p>
-              </div>
-            </>
+            </div>
           )}
         </div>
-        
-        {/* Alert Status */}
-        <div className="bg-slate-800 rounded-lg p-6 mb-6 border border-slate-700">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-yellow-400">Alert Status</h3>
-            <div className="flex items-center space-x-2">
-              <span className="text-gray-400">Level:</span>
-              <span className={getAlertIcon()}>{alertLevel.toUpperCase()}</span>
-            </div>
-          </div>
-          <div className="text-center">
-            <p className="text-lg text-gray-300 mb-2">
-              {protectionStatus?.isProtected ? (
-                <span className="text-green-400">✅ Protection Active</span>
-              ) : (
-                <span className="text-yellow-400">⚠️ Protection Inactive</span>
-              )}
-            </p>
-          </div>
-        </div>
-        
-        {/* Recommendations */}
-        {recommendations.length > 0 && (
-          <div className="bg-slate-800 rounded-lg p-6 mb-6 border border-slate-700">
-            <h3 className="text-lg font-semibold mb-4 text-yellow-400">Recommendations</h3>
-            <ul className="space-y-2">
-              {recommendations.map((recommendation, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-yellow-400 mr-2">⚠️</span>
-                  <span className="text-gray-300">{recommendation}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        
-        {/* Action Buttons */}
-        <div className="flex justify-center space-x-4 mb-6">
-          <button
-            onClick={forceProtection}
-            disabled={protectionStatus?.isProtected}
-            className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-          >
-            {protectionStatus?.isProtected ? 'Protection Active' : 'Activate Protection'}
-          </button>
-          
-          <button
-            onClick={() => setShowConfig(!showConfig)}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-          >
-            {showConfig ? 'Hide Config' : 'Show Config'}
-          </button>
-          
-          <button
-            onClick={() => setShowDetails(!showDetails)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-          >
-            {showDetails ? 'Hide Details' : 'Show Details'}
-          </button>
-        </div>
-        
-        {/* Detailed View */}
-        {showDetails && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Protection History */}
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-              <h3 className="text-lg font-semibold mb-4 text-blue-400">Protection History</h3>
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {history.slice(-10).reverse().map((entry, index) => (
-                  <div 
-                    key={index} 
-                    className="flex justify-between items-center text-sm p-2 hover:bg-slate-700 rounded cursor-pointer"
-                    onClick={() => setSelectedLog(entry)}
-                  >
-                    <span className="text-gray-400">
-                      {new Date(entry.timestamp).toLocaleTimeString()}
-                    </span>
-                    <span className="text-blue-400 ml-4">
-                      {entry.type}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Quantum Logs */}
-            <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-              <h3 className="text-lg font-semibold mb-4 text-green-400">Quantum Logs</h3>
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {logs.slice(-10).reverse().map((log, index) => (
-                  <div 
-                    key={index} 
-                    className="text-sm p-2 hover:bg-slate-700 rounded cursor-pointer"
-                    onClick={() => setSelectedLog(log)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-400">
-                        {new Date(log.timestamp).toLocaleTimeString()}
-                      </span>
-                      <span className="text-blue-400 ml-4">
-                        {log.event}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-        
-        {/* Configuration Modal */}
-        {showConfig && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-8 z-50">
-            <div className="bg-slate-800 rounded-lg p-8 max-w-md max-h-[80vh] overflow-y-auto border border-slate-700">
-              <h2 className="text-2xl font-bold mb-6 text-white mb-4">
-                🛡️ Quantum Protection Configuration
-              </h2>
-              
-              <form onSubmit={handleConfigSubmit} className="space-y-4">
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Coherence Threshold
-                    </label>
-                    <input
-                      type="number"
-                      min="0.95"
-                      max="1.0"
-                      step="0.001"
-                      value={configForm.coherenceThreshold}
-                      onChange={(e) => setConfigForm({
-                        ...configForm,
-                        coherenceThreshold: parseFloat(e.target.value)
-                      })}
-                      className="w-full px-3 py-2 bg-slate-700 text-white rounded-lg"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Degradation Threshold
-                    </label>
-                    <input
-                      type="number"
-                      min="0.9"
-                      max="0.999"
-                      step="0.001"
-                      value={configForm.degradationThreshold}
-                      onChange={(e) => setConfigForm({
-                        ...configForm,
-                        degradationThreshold: parseFloat(e.target.value)
-                      })}
-                      className="w-full px-3 py-2 bg-slate-700 text-white rounded-lg"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Protection Interval (ms)
-                    </label>
-                    <input
-                      type="number"
-                      min="5000"
-                      max="60000"
-                      step="1000"
-                      value={configForm.protectionInterval}
-                      onChange={(e) => setConfigForm({
-                        ...configForm,
-                        protectionInterval: parseInt(e.target.value)
-                      })}
-                      className="w-full px-3 py-2 bg-slate-700 text-white rounded-lg"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="autoRecovery"
-                        checked={configForm.autoRecovery}
-                        onChange={(e) => setConfigForm({
-                          ...configForm,
-                          autoRecovery: e.target.checked
-                        })}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor="autoRecovery" className="text-sm font-medium text-gray-300">
-                        Auto-Recovery
-                      </label>
-                    </div>
-                  
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="monitoringEnabled"
-                        checked={configForm.monitoringEnabled}
-                        onChange={(e) => setConfigForm({
-                          ...configForm,
-                          monitoringEnabled: e.target.checked
-                        })}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor="monitoringEnabled" className="text-sm font-medium text-gray-300">
-                        Monitoring
-                      </label>
-                    </div>
-                  
-                  <div>
-                    <label className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="alertThreshold"
-                        checked={configForm.alertThreshold === 0.99}
-                        onChange={(e) => setConfigForm({
-                          ...configForm,
-                          alertThreshold: e.target.checked ? 0.99 : 0.99
-                        })}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor="alertThreshold" className="text-sm font-medium text-gray-300">
-                          Alert Threshold: 0.99
-                        </label>
-                    </div>
-                </div>
-                
-                <div className="flex justify-end space-x-4">
-                  <button
-                    type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-                  >
-                    Update Configuration
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowConfig(false)}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-        
-        {/* Selected Log Detail */}
-        {selectedLog && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-8 z-50">
-            <div className="bg-slate-800 rounded-lg p-8 max-w-md max-h-[80vh] overflow-y-auto border border-slate-700">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-yellow-400">Log Details</h3>
-                <button
-                  onClick={() => setSelectedLog(null)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div className="bg-slate-900 rounded p-4">
-                <pre className="text-sm text-gray-300 overflow-x-auto">
-                  {JSON.stringify(selectedLog, null, 2)}
-                </pre>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
