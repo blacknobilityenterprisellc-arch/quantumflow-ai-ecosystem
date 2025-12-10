@@ -1,0 +1,710 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@octokit/request": {
+      "name": "@octokit/request",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@octokit/request-error",
+        {
+          "source": 1102896,
+          "name": "@octokit/request",
+          "dependency": "@octokit/request",
+          "title": "@octokit/request has a Regular Expression in fetchWrapper that Leads to ReDoS Vulnerability Due to Catastrophic Backtracking",
+          "url": "https://github.com/advisories/GHSA-rmvr-2pp2-xj38",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": ">=1.0.0 <8.4.1"
+        }
+      ],
+      "effects": [
+        "@octokit/rest"
+      ],
+      "range": "<=8.4.0",
+      "nodes": [
+        "node_modules/@octokit/request"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@octokit/request-error": {
+      "name": "@octokit/request-error",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1102256,
+          "name": "@octokit/request-error",
+          "dependency": "@octokit/request-error",
+          "title": "@octokit/request-error has a Regular Expression in index that Leads to ReDoS Vulnerability Due to Catastrophic Backtracking",
+          "url": "https://github.com/advisories/GHSA-xx4v-prfh-6cgc",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": ">=1.0.0 <5.1.1"
+        }
+      ],
+      "effects": [
+        "@octokit/request",
+        "@octokit/rest"
+      ],
+      "range": "<=5.1.0",
+      "nodes": [
+        "node_modules/@octokit/request-error"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@octokit/rest": {
+      "name": "@octokit/rest",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@octokit/request",
+        "@octokit/request-error",
+        "lodash.set"
+      ],
+      "effects": [
+        "gh"
+      ],
+      "range": "16.0.0 - 16.43.2",
+      "nodes": [
+        "node_modules/@octokit/rest"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "external-editor": {
+      "name": "external-editor",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        "tmp"
+      ],
+      "effects": [
+        "inquirer"
+      ],
+      "range": ">=1.1.1",
+      "nodes": [
+        "node_modules/external-editor"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "form-data": {
+      "name": "form-data",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1109540,
+          "name": "form-data",
+          "dependency": "form-data",
+          "title": "form-data uses unsafe random function in form-data for choosing boundary",
+          "url": "https://github.com/advisories/GHSA-fjxv-7rqg-78g4",
+          "severity": "critical",
+          "cwe": [
+            "CWE-330"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<2.5.4"
+        }
+      ],
+      "effects": [
+        "request"
+      ],
+      "range": "<2.5.4",
+      "nodes": [
+        "node_modules/form-data"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "gh": {
+      "name": "gh",
+      "severity": "critical",
+      "isDirect": true,
+      "via": [
+        "@octokit/rest",
+        "handlebars",
+        "inquirer",
+        "marked",
+        "marked-terminal",
+        "moment",
+        "request",
+        "tmp",
+        "update-notifier"
+      ],
+      "effects": [],
+      "range": ">=1.8.0",
+      "nodes": [
+        "node_modules/gh"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "got": {
+      "name": "got",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1088948,
+          "name": "got",
+          "dependency": "got",
+          "title": "Got allows a redirect to a UNIX socket",
+          "url": "https://github.com/advisories/GHSA-pfrx-2q88-qq97",
+          "severity": "moderate",
+          "cwe": [],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": "<11.8.5"
+        }
+      ],
+      "effects": [
+        "package-json"
+      ],
+      "range": "<11.8.5",
+      "nodes": [
+        "node_modules/got"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "handlebars": {
+      "name": "handlebars",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1095063,
+          "name": "handlebars",
+          "dependency": "handlebars",
+          "title": "Remote code execution in handlebars when compiling templates",
+          "url": "https://github.com/advisories/GHSA-f2jv-r9rf-7988",
+          "severity": "critical",
+          "cwe": [
+            "CWE-94"
+          ],
+          "cvss": {
+            "score": 9.8,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "range": "<4.7.7"
+        },
+        {
+          "source": 1102335,
+          "name": "handlebars",
+          "dependency": "handlebars",
+          "title": "Prototype Pollution in handlebars",
+          "url": "https://github.com/advisories/GHSA-765h-qjxv-5f44",
+          "severity": "critical",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 9.8,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "range": "<4.7.7"
+        },
+        "optimist"
+      ],
+      "effects": [
+        "gh"
+      ],
+      "range": "<=4.7.6",
+      "nodes": [
+        "node_modules/handlebars"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "inquirer": {
+      "name": "inquirer",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        "external-editor"
+      ],
+      "effects": [
+        "gh"
+      ],
+      "range": "3.0.0 - 8.2.6 || 9.0.0 - 9.3.7",
+      "nodes": [
+        "node_modules/inquirer"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "latest-version": {
+      "name": "latest-version",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "package-json"
+      ],
+      "effects": [
+        "update-notifier"
+      ],
+      "range": "0.2.0 - 5.1.0",
+      "nodes": [
+        "node_modules/latest-version"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "lodash.set": {
+      "name": "lodash.set",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1106906,
+          "name": "lodash.set",
+          "dependency": "lodash.set",
+          "title": "Prototype Pollution in lodash",
+          "url": "https://github.com/advisories/GHSA-p6mc-m468-83gw",
+          "severity": "high",
+          "cwe": [
+            "CWE-770",
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 7.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+          },
+          "range": ">=3.7.0 <=4.3.2"
+        }
+      ],
+      "effects": [],
+      "range": "*",
+      "nodes": [
+        "node_modules/lodash.set"
+      ],
+      "fixAvailable": true
+    },
+    "marked": {
+      "name": "marked",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1091665,
+          "name": "marked",
+          "dependency": "marked",
+          "title": "Regular Expression Denial of Service in marked",
+          "url": "https://github.com/advisories/GHSA-ch52-vgq2-943f",
+          "severity": "low",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.4.0 <0.7.0"
+        },
+        {
+          "source": 1095051,
+          "name": "marked",
+          "dependency": "marked",
+          "title": "Inefficient Regular Expression Complexity in marked",
+          "url": "https://github.com/advisories/GHSA-rrrm-qjm4-v8hf",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<4.0.10"
+        },
+        {
+          "source": 1095052,
+          "name": "marked",
+          "dependency": "marked",
+          "title": "Inefficient Regular Expression Complexity in marked",
+          "url": "https://github.com/advisories/GHSA-5v2h-r2cx-5xgj",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<4.0.10"
+        }
+      ],
+      "effects": [
+        "gh",
+        "marked-terminal"
+      ],
+      "range": "<=4.0.9",
+      "nodes": [
+        "node_modules/gh/node_modules/marked",
+        "node_modules/marked"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "marked-terminal": {
+      "name": "marked-terminal",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "marked"
+      ],
+      "effects": [],
+      "range": "<=4.2.0",
+      "nodes": [
+        "node_modules/marked-terminal"
+      ],
+      "fixAvailable": true
+    },
+    "minimist": {
+      "name": "minimist",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1096466,
+          "name": "minimist",
+          "dependency": "minimist",
+          "title": "Prototype Pollution in minimist",
+          "url": "https://github.com/advisories/GHSA-vh95-rmgr-6w4m",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 5.6,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
+          },
+          "range": "<0.2.1"
+        },
+        {
+          "source": 1097677,
+          "name": "minimist",
+          "dependency": "minimist",
+          "title": "Prototype Pollution in minimist",
+          "url": "https://github.com/advisories/GHSA-xvch-5gv4-984h",
+          "severity": "critical",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 9.8,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "range": "<0.2.4"
+        }
+      ],
+      "effects": [
+        "optimist"
+      ],
+      "range": "<=0.2.3",
+      "nodes": [
+        "node_modules/minimist"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "moment": {
+      "name": "moment",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1109571,
+          "name": "moment",
+          "dependency": "moment",
+          "title": "Path Traversal: 'dir/../../filename' in moment.locale",
+          "url": "https://github.com/advisories/GHSA-8hfj-j24r-96c4",
+          "severity": "high",
+          "cwe": [
+            "CWE-22",
+            "CWE-27"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<2.29.2"
+        },
+        {
+          "source": 1109572,
+          "name": "moment",
+          "dependency": "moment",
+          "title": "Moment.js vulnerable to Inefficient Regular Expression Complexity",
+          "url": "https://github.com/advisories/GHSA-wc69-rhjr-hc9g",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=2.18.0 <2.29.4"
+        }
+      ],
+      "effects": [
+        "gh"
+      ],
+      "range": "<=2.29.3",
+      "nodes": [
+        "node_modules/moment"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "optimist": {
+      "name": "optimist",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        "minimist"
+      ],
+      "effects": [
+        "handlebars"
+      ],
+      "range": ">=0.6.0",
+      "nodes": [
+        "node_modules/optimist"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "package-json": {
+      "name": "package-json",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "got"
+      ],
+      "effects": [
+        "latest-version"
+      ],
+      "range": "<=6.5.0",
+      "nodes": [
+        "node_modules/package-json"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "request": {
+      "name": "request",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1096727,
+          "name": "request",
+          "dependency": "request",
+          "title": "Server-Side Request Forgery in Request",
+          "url": "https://github.com/advisories/GHSA-p8p7-x288-28g6",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-918"
+          ],
+          "cvss": {
+            "score": 6.1,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+          },
+          "range": "<=2.88.2"
+        },
+        "form-data",
+        "tough-cookie"
+      ],
+      "effects": [
+        "gh"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/request"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "tmp": {
+      "name": "tmp",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1109537,
+          "name": "tmp",
+          "dependency": "tmp",
+          "title": "tmp allows arbitrary temporary file / directory write via symbolic link `dir` parameter",
+          "url": "https://github.com/advisories/GHSA-52f5-9888-hmc6",
+          "severity": "low",
+          "cwe": [
+            "CWE-59"
+          ],
+          "cvss": {
+            "score": 2.5,
+            "vectorString": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": "<=0.2.3"
+        }
+      ],
+      "effects": [
+        "external-editor",
+        "gh"
+      ],
+      "range": "<=0.2.3",
+      "nodes": [
+        "node_modules/external-editor/node_modules/tmp",
+        "node_modules/tmp"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "tough-cookie": {
+      "name": "tough-cookie",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1097682,
+          "name": "tough-cookie",
+          "dependency": "tough-cookie",
+          "title": "tough-cookie Prototype Pollution vulnerability",
+          "url": "https://github.com/advisories/GHSA-72xf-g2v4-qvf3",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 6.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+          },
+          "range": "<4.1.3"
+        }
+      ],
+      "effects": [
+        "request"
+      ],
+      "range": "<4.1.3",
+      "nodes": [
+        "node_modules/tough-cookie"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    },
+    "update-notifier": {
+      "name": "update-notifier",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "latest-version"
+      ],
+      "effects": [
+        "gh"
+      ],
+      "range": "0.2.0 - 5.1.0",
+      "nodes": [
+        "node_modules/update-notifier"
+      ],
+      "fixAvailable": {
+        "name": "gh",
+        "version": "2.5.0",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 3,
+      "moderate": 7,
+      "high": 5,
+      "critical": 6,
+      "total": 21
+    },
+    "dependencies": {
+      "prod": 128,
+      "dev": 704,
+      "optional": 61,
+      "peer": 1,
+      "peerOptional": 0,
+      "total": 868
+    }
+  }
+}
