@@ -1,0 +1,148 @@
+packages:
+<<<<<<< HEAD
+  - apps/*
+  - packages/*
+  - mini-services/*
+  - tools/*
+  - scripts/*
+
+catalog:
+  '@prisma/client': ^7.1.0
+  '@radix-ui/*': ^1.0.0
+  '@tanstack/react-query': ^5.90.12
+  '@types/node': ^24.10.1
+  '@types/react': ^19.2.7
+  '@types/react-dom': ^19.2.3
+  eslint: ^9.39.1
+  framer-motion: ^12.23.25
+  lucide-react: ^0.556.0
+  next: ^16.0.7
+  prettier: ^3.7.4
+  prisma: ^7.1.0
+  react: ^19.2.1
+  react-dom: ^19.2.1
+  tailwindcss: ^4.1.17
+  tsx: ^4.21.0
+  typescript: ^5.9.3
+  z-ai-web-dev-sdk: ^0.0.11
+  zustand: ^5.0.9
+
+overrides:
+  d3-color@<3.1.0: '>=3.1.0'
+  esbuild@<=0.24.2: '>=0.25.0'
+  form-data@<2.5.4: '>=2.5.4'
+  got@<11.8.5: '>=11.8.5'
+  tar-fs@>=3.0.0 <3.0.7: '>=3.0.7'
+  tar-fs@>=3.0.0 <3.0.9: '>=3.0.9'
+  tar-fs@>=3.0.0 <3.1.1: '>=3.1.1'
+  tmp@<=0.2.3: '>=0.2.4'
+  tough-cookie@<4.1.3: '>=4.1.3'
+  ws@>=8.0.0 <8.17.1: '>=8.17.1'
+=======
+  - 'apps/*'
+  - 'packages/*'
+  - 'tools/*'
+  - 'configs/*'
+
+catalog:
+  # Next.js ecosystem (Latest versions as of Nov 16, 2025)
+  next: ^16.0.3
+  react: ^19.0.0
+  react-dom: ^19.0.0
+  typescript: ^5.7.2
+  
+  # UI Libraries (Enhanced with latest)
+  '@radix-ui/*': ^1.2.2
+  lucide-react: ^0.468.0
+  framer-motion: ^11.15.0
+  sonner: ^1.7.1
+  class-variance-authority: ^0.7.1
+  
+  # Development Tools (Modern stack)
+  tailwindcss: ^4.0.0
+  '@tailwindcss/*': ^0.5.15
+  prisma: ^6.2.0
+  eslint: ^9.16.0
+  '@typescript-eslint/*': ^8.18.2
+  prettier: ^3.4.2
+  turbo: ^2.4.0
+  
+  # AI/ML Libraries (Latest)
+  'z-ai-web-dev-sdk': ^0.0.11
+  openai: ^4.76.1
+  '@anthropic-ai/sdk': ^0.69.0
+  '@ai-sdk/*': ^1.0.0
+  
+  # Enterprise Libraries (Updated)
+  '@supabase/supabase-js': ^2.47.1
+  '@stripe/stripe-js': ^4.1.0
+  zustand: ^5.0.2
+  '@tanstack/react-query': ^5.62.0
+  
+  # Security & Auth (Enhanced)
+  bcryptjs: ^2.4.3
+  jsonwebtoken: ^9.0.2
+  '@types/bcryptjs': ^2.4.6
+  '@types/jsonwebtoken': ^9.0.7
+  
+  # Testing & Quality (Modern)
+  jest: ^29.7.0
+  '@testing-library/react': ^16.1.0
+  '@testing-library/jest-dom': ^6.7.0
+  '@types/jest': ^29.5.14
+  vitest: ^2.1.8
+  playwright: ^1.49.1
+  
+  # Analytics & Monitoring (Latest)
+  '@vercel/analytics': ^1.4.1
+  '@sentry/nextjs': ^8.47.0
+  
+  # Build & Deployment (Enhanced)
+  sharp: ^0.33.5
+  next-fonts: ^1.5.2
+  clsx: ^2.1.1
+  tailwind-merge: ^2.5.5
+  vite: ^6.0.7
+  
+  # Advanced Components
+  cmdk: ^1.0.5
+  date-fns: ^4.1.0
+  recharts: ^2.15.0
+  tsx: ^4.19.2
+
+preferred-workspace-packages:
+  - 'keystone-ai-ecosystem-*'
+  - '@keystone-ai/*'
+
+workspace-dependencies-metadata:
+  # Enable strict workspace dependency resolution
+  strict: true
+  
+  # Prefer workspace packages over external
+  prefer-workspace-packages: true
+  
+  # Shared workspace lockfile
+  shared-workspace-lockfile: true
+
+  # Advanced caching (Optimized)
+  cache-dir: .pnpm-store
+  store-dir: ~/.pnpm-store
+
+  # Performance optimizations (Enhanced)
+  shamefully-hoist: true
+  strict-peer-dependencies: false
+  resolution-mode: highest
+
+  # Security & Reliability (Modern)
+  auto-install-peers: true
+  verify-peer-integrity: true
+  prefer-frozen-lockfile: true
+
+  # Development guardrails
+  enforce-constrained-versions: true
+  prefer-interactive-resolution: false
+
+  # Build optimizations
+  optimize-deps: true
+  dedupe-direct-deps: true
+>>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
