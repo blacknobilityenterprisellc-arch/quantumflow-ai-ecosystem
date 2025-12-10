@@ -1,7 +1,8 @@
-// 🧠 AETHERIUS-ETERNAL QUANTUM COHERENCE API ROUTES
-// Next.js API routes for quantum coherence management
+// 🧠 AETHERIUS-ETERNAL QUANTUM COHERENCE API ROUTES v15.4.0
+// Next.js API routes for quantum coherence management with Z-AI Integration
 
 import { NextRequest, NextResponse } from 'next/server';
+import ZAI from 'z-ai-web-dev-sdk';
 
 // 🎯 GET /api/quantum/coherence - Get current coherence status
 export async function GET(request: NextRequest) {

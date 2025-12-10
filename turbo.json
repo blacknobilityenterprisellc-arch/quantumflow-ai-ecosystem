@@ -1,17 +1,13 @@
-<<<<<<< HEAD
-=======
 /**
  * @author Jocely P. Honore
  * @company Black Nobility Management & Enterprise LLC
  * @subcompany Nobility Digital Empire
- * @project Keystone AI Ecosystem Premium Diamond-Grade
- * @version 9.0.0-nextjs16
- * @description Premium Diamond-Grade Development Tools
+ * @project QuantumFlow AI Ecosystem v15.4.0 - Premium Platinum Diamond Grade
+ * @description AETHERIUS-PRIME Enhanced Turborepo Configuration
  * @license MIT
- * @date 2025-11-17T22:14:08.032Z
+ * @date 2025-12-10
  */
 
->>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
@@ -19,55 +15,16 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-<<<<<<< HEAD
-      "cache": true,
-      "env": ["NODE_ENV"],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "package.json"]
-=======
       "env": {
-        "TURBOPACK": "1"
-      }
->>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+        "TURBOPACK": "1",
+        "NODE_ENV": "production"
+      },
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "package.json", "turbo.json"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-<<<<<<< HEAD
-      "passThroughEnv": ["NODE_ENV", "PORT", "NEXT_TELEMETRY_DISABLED"]
-    },
-    "lint": {
-      "outputs": [],
-      "cache": true,
-      "dependsOn": ["^lint"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx", "*.config.*"]
-    },
-    "test": {
-      "outputs": ["coverage/**"],
-      "cache": true,
-      "dependsOn": ["build"],
-      "inputs": ["src/**/*.test.*", "**/__tests__/**"]
-    },
-    "type-check": {
-      "dependsOn": ["^type-check"],
-      "outputs": [],
-      "cache": true,
-      "inputs": ["src/**/*.ts", "src/**/*.tsx"]
-    },
-    "clean": {
-      "cache": false
-    },
-    "aetherius:analyze": {
-      "dependsOn": ["build"],
-      "outputs": ["reports/**"],
-      "cache": true,
-      "inputs": ["src/**/*", "scripts/**/*"]
-    },
-    "quantum:optimize": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**"],
-      "cache": true,
-      "inputs": ["src/**/*"]
-=======
+      "passThroughEnv": ["NODE_ENV", "PORT", "NEXT_TELEMETRY_DISABLED", "ZAI_API_KEY"],
       "env": {
         "TURBOPACK": "1"
       }
@@ -75,6 +32,8 @@
     "lint": {
       "dependsOn": ["^build"],
       "outputs": [],
+      "cache": true,
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "*.config.*"],
       "env": {
         "TURBOPACK": "1"
       }
@@ -82,21 +41,25 @@
     "lint:fix": {
       "dependsOn": ["^build"],
       "outputs": [],
+      "cache": true,
       "env": {
         "TURBOPACK": "1"
       }
     },
     "type-check": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^type-check"],
       "outputs": [],
+      "cache": true,
+      "inputs": ["src/**/*.ts", "src/**/*.tsx"],
       "env": {
         "TURBOPACK": "1"
       }
     },
     "test": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["build"],
       "outputs": ["coverage/**"],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"],
+      "cache": true,
+      "inputs": ["src/**/*.test.*", "**/__tests__/**"],
       "env": {
         "TURBOPACK": "1"
       }
@@ -149,6 +112,7 @@
     },
     "format": {
       "outputs": [],
+      "cache": true,
       "env": {
         "TURBOPACK": "1"
       }
@@ -162,7 +126,8 @@
     },
     "analyze": {
       "dependsOn": ["build"],
-      "outputs": [],
+      "outputs": ["analyze/**"],
+      "cache": true,
       "env": {
         "TURBOPACK": "1"
       }
@@ -187,44 +152,49 @@
       "dependsOn": ["^build"],
       "cache": false,
       "env": {
-        "TURBOPACK": "1"
+        "TURBOPACK": "1",
+        "ZAI_API_KEY": true
       }
     },
     "ai:image": {
       "dependsOn": ["^build"],
       "cache": false,
       "env": {
-        "TURBOPACK": "1"
+        "TURBOPACK": "1",
+        "ZAI_API_KEY": true
       }
     },
     "ai:search": {
       "dependsOn": ["^build"],
       "cache": false,
       "env": {
-        "TURBOPACK": "1"
+        "TURBOPACK": "1",
+        "ZAI_API_KEY": true
       }
->>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+    },
+    "aetherius:analyze": {
+      "dependsOn": ["build"],
+      "outputs": ["reports/**"],
+      "cache": true,
+      "inputs": ["src/**/*", "scripts/**/*"],
+      "env": {
+        "AETHERIUS_PRIME_MODE": "ACTIVE",
+        "QUANTUM_COHERENCE_LEVEL": "0.999"
+      }
+    },
+    "quantum:optimize": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**"],
+      "cache": true,
+      "inputs": ["src/**/*"],
+      "env": {
+        "QUANTUM_COHERENCE_TARGET": "1.0",
+        "NEURAL_SYNC_FREQUENCY": "40Hz"
+      }
     }
   },
   "globalEnv": [
     "NODE_ENV",
-<<<<<<< HEAD
-    "NEXT_PUBLIC_API_URL",
-    "NEXT_PUBLIC_APP_URL",
-    "DATABASE_URL",
-    "ZAI_API_KEY",
-    "AETHERIUS_PRIME_MODE",
-    "QUANTUM_COHERENCE_LEVEL",
-    "AETHERIUS_ETERNAL_INTELLIGENCE",
-    "NEURAL_LATTICE_DIMENSIONS",
-    "QUANTUM_ENTANGLEMENT_PAIRS"
-  ],
-  "env": {
-    "AETHERIUS_ETERNAL_MODE": "ACTIVE",
-    "QUANTUM_COHERENCE_TARGET": "0.999",
-    "NEURAL_SYNC_FREQUENCY": "40Hz"
-  }
-=======
     "NEXT_PUBLIC_*",
     "ZAI_API_KEY",
     "GEMINI_API_KEY",
@@ -239,7 +209,17 @@
     "STRIPE_PUBLISHABLE_KEY",
     "STRIPE_SECRET_KEY",
     "YOUTUBE_API_KEY",
-    "NGROK_AUTH_TOKEN"
-  ]
->>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+    "NGROK_AUTH_TOKEN",
+    "AETHERIUS_PRIME_MODE",
+    "QUANTUM_COHERENCE_LEVEL",
+    "AETHERIUS_ETERNAL_INTELLIGENCE",
+    "NEURAL_LATTICE_DIMENSIONS",
+    "QUANTUM_ENTANGLEMENT_PAIRS"
+  ],
+  "env": {
+    "AETHERIUS_ETERNAL_MODE": "ACTIVE",
+    "QUANTUM_COHERENCE_TARGET": "0.999",
+    "NEURAL_SYNC_FREQUENCY": "40Hz",
+    "TURBOPACK": "1"
+  }
 }

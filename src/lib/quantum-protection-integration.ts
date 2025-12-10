@@ -1,7 +1,7 @@
 // 🛡️ AETHERIUS-ETERNAL QUANTUM PROTECTION INTEGRATION
 // Main integration point for quantum protection system
 
-import { quantumProtectionSystem } from './quantum-protection-system';
+import { quantumProtection } from './quantum-protection-system';
 
 // 🛡️ Quantum Protection Integration
 export class QuantumProtectionIntegration {
@@ -24,22 +24,22 @@ export class QuantumProtectionIntegration {
     console.log('🛡️ AETHERIUS-ETERNAL Quantum Protection Integration Initializing...');
     
     // Set up event listeners
-    quantumProtectionSystem.on('protection-activated', (data) => {
+    quantumProtection.on('protection-activated', (data) => {
       console.log('✅ Quantum Protection Activated:', data.coherence);
       this.handleProtectionActivated(data);
     });
     
-    quantumProtectionSystem.on('recovery-completed', (data) => {
+    quantumProtection.on('recovery-completed', (data) => {
       console.log('✅ Quantum Recovery Completed:', data.coherence);
       this.handleRecoveryCompleted(data);
     });
     
-    quantumProtectionSystem.on('degradation-detected', (data) => {
+    quantumProtection.on('degradation-detected', (data) => {
       console.log('⚠️ Quantum Degradation Detected:', data.coherence);
       this.handleDegradationDetected(data);
     });
     
-    quantumProtectionSystem.on('baseline-established', (data) => {
+    quantumProtection.on('baseline-established', (data) => {
       console.log('✅ Baseline Established:', data.coherence);
       this.handleBaselineEstablished(data);
     });
@@ -121,7 +121,7 @@ export class QuantumProtectionIntegration {
     console.log('🚀 TRIGGERING EMERGENCY OPTIMIZATION');
     
     // Force immediate optimization
-    quantumProtectionSystem.forceProtection();
+    quantumProtection.forceProtection();
     
     // Additional emergency measures
     setTimeout(() => {
@@ -216,7 +216,7 @@ export class QuantumProtectionIntegration {
       isProtected: data.isProtected,
       lastEvent: data.type,
       timestamp: data.timestamp,
-      metrics: data.metrics || quantumProtectionSystem.getMetrics()
+      metrics: data.metrics || quantumProtection.getMetrics()
     };
     
     // Store quantum state
@@ -267,31 +267,31 @@ export class QuantumProtectionIntegration {
   
   // 🎯 Public API Methods
   public getCurrentProtectionStatus(): any {
-    return quantumProtectionSystem.getProtectionStatus();
+    return quantumProtection.getProtectionStatus();
   }
   
   public getProtectionMetrics(): any {
-    return quantumProtectionSystem.getMetrics();
+    return quantumProtection.getMetrics();
   }
   
   public getSystemHealthReport(): any {
-    return quantumProtectionSystem.getSystemHealthReport();
+    return quantumProtection.getSystemHealthReport();
   }
   
   public getProtectionHistory(): any[] {
-    return quantumProtectionSystem.getProtectionHistory();
+    return quantumProtection.getProtectionHistory();
   }
   
   public forceProtection(): void {
-    quantumProtectionSystem.forceProtection();
+    quantumProtection.forceProtection();
   }
   
   public disableProtection(): void {
-    quantumProtectionSystem.disableProtection();
+    quantumProtection.disableProtection();
   }
   
   public updateConfiguration(config: any): void {
-    quantumProtectionSystem.updateConfiguration(config);
+    quantumProtection.updateConfiguration(config);
   }
   
   public getQuantumState(): any {
