@@ -1,0 +1,44 @@
+{
+  "@octokit/rest": {
+    "current": "20.1.2",
+    "wanted": "20.1.2",
+    "latest": "22.0.1",
+    "dependent": "my-project",
+    "location": "/home/z/my-project/node_modules/@octokit/rest"
+  },
+  "@types/bcryptjs": {
+    "current": "3.0.0",
+    "wanted": "3.0.0",
+    "latest": "2.4.6",
+    "dependent": "my-project",
+    "location": "/home/z/my-project/node_modules/@types/bcryptjs"
+  },
+  "@types/node": {
+    "current": "24.10.2",
+    "wanted": "24.10.3",
+    "latest": "25.0.0",
+    "dependent": "my-project",
+    "location": "/home/z/my-project/node_modules/@types/node"
+  },
+  "@types/pg": {
+    "current": "8.15.6",
+    "wanted": "8.16.0",
+    "latest": "8.16.0",
+    "dependent": "my-project",
+    "location": "/home/z/my-project/node_modules/@types/pg"
+  },
+  "@types/redis": {
+    "current": "4.0.11",
+    "wanted": "4.0.11",
+    "latest": "4.0.10",
+    "dependent": "my-project",
+    "location": "/home/z/my-project/node_modules/@types/redis"
+  },
+  "lucide-react": {
+    "current": "0.556.0",
+    "wanted": "0.556.0",
+    "latest": "0.559.0",
+    "dependent": "my-project",
+    "location": "/home/z/my-project/node_modules/lucide-react"
+  }
+}

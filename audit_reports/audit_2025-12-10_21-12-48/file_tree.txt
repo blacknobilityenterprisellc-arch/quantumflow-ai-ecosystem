@@ -1,0 +1,781 @@
+.
+|-- .env
+|-- .env.example
+|-- .env.local
+|-- .env.production
+|-- .eslintrc.security.js
+|-- .github
+|   `-- workflows
+|       |-- ci-cd.yml
+|       |-- quantum-workflow.yml
+|       `-- security-scan.yml
+|-- .gitignore
+|-- .next
+|   |-- BUILD_ID
+|   |-- app-path-routes-manifest.json
+|   |-- build
+|   |   |-- chunks
+|   |   |   |-- [root-of-the-server]__44695d76._.js
+|   |   |   |-- [root-of-the-server]__44695d76._.js.map
+|   |   |   |-- [root-of-the-server]__6d51cb5d._.js
+|   |   |   |-- [root-of-the-server]__6d51cb5d._.js.map
+|   |   |   |-- [turbopack-node]_transforms_postcss_ts_4e6a3ac6._.js
+|   |   |   |-- [turbopack-node]_transforms_postcss_ts_4e6a3ac6._.js.map
+|   |   |   |-- [turbopack]_runtime.js
+|   |   |   |-- [turbopack]_runtime.js.map
+|   |   |   |-- node_modules_fe693df6._.js
+|   |   |   `-- node_modules_fe693df6._.js.map
+|   |   |-- package.json
+|   |   |-- postcss.js
+|   |   `-- postcss.js.map
+|   |-- build-manifest.json
+|   |-- cache
+|   |   |-- .tsbuildinfo
+|   |   `-- config.json
+|   |-- dev
+|   |   |-- build
+|   |   |   |-- chunks
+|   |   |   |   |-- [root-of-the-server]__44695d76._.js
+|   |   |   |   |-- [root-of-the-server]__44695d76._.js.map
+|   |   |   |   |-- [root-of-the-server]__6d51cb5d._.js
+|   |   |   |   |-- [root-of-the-server]__6d51cb5d._.js.map
+|   |   |   |   |-- [turbopack-node]_transforms_postcss_ts_4e6a3ac6._.js
+|   |   |   |   |-- [turbopack-node]_transforms_postcss_ts_4e6a3ac6._.js.map
+|   |   |   |   |-- [turbopack]_runtime.js
+|   |   |   |   |-- [turbopack]_runtime.js.map
+|   |   |   |   |-- node_modules_fe693df6._.js
+|   |   |   |   `-- node_modules_fe693df6._.js.map
+|   |   |   |-- package.json
+|   |   |   |-- postcss.js
+|   |   |   `-- postcss.js.map
+|   |   |-- build-manifest.json
+|   |   |-- cache
+|   |   |   |-- config.json
+|   |   |   `-- next-devtools-config.json
+|   |   |-- fallback-build-manifest.json
+|   |   |-- lock
+|   |   |-- logs
+|   |   |   `-- next-development.log
+|   |   |-- package.json
+|   |   |-- prerender-manifest.json
+|   |   |-- routes-manifest.json
+|   |   |-- server
+|   |   |   |-- app
+|   |   |   |   |-- page
+|   |   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |   |-- build-manifest.json
+|   |   |   |   |   |-- next-font-manifest.json
+|   |   |   |   |   |-- react-loadable-manifest.json
+|   |   |   |   |   `-- server-reference-manifest.json
+|   |   |   |   |-- page.js
+|   |   |   |   |-- page.js.map
+|   |   |   |   `-- page_client-reference-manifest.js
+|   |   |   |-- app-paths-manifest.json
+|   |   |   |-- chunks
+|   |   |   |   `-- ssr
+|   |   |   |       |-- [root-of-the-server]__1aaf5479._.js
+|   |   |   |       |-- [root-of-the-server]__1aaf5479._.js.map
+|   |   |   |       |-- [root-of-the-server]__7f148858._.js
+|   |   |   |       |-- [root-of-the-server]__7f148858._.js.map
+|   |   |   |       |-- [root-of-the-server]__c2c32f1c._.js
+|   |   |   |       |-- [root-of-the-server]__c2c32f1c._.js.map
+|   |   |   |       |-- [root-of-the-server]__e3b42a2b._.js
+|   |   |   |       |-- [root-of-the-server]__e3b42a2b._.js.map
+|   |   |   |       |-- [turbopack]_runtime.js
+|   |   |   |       |-- [turbopack]_runtime.js.map
+|   |   |   |       |-- _ce9a95c8._.js
+|   |   |   |       |-- _ce9a95c8._.js.map
+|   |   |   |       |-- _next-internal_server_app_page_actions_39d4fc33.js
+|   |   |   |       |-- _next-internal_server_app_page_actions_39d4fc33.js.map
+|   |   |   |       |-- node_modules_ba5a1b72._.js
+|   |   |   |       |-- node_modules_ba5a1b72._.js.map
+|   |   |   |       |-- node_modules_next_dist_2eb74c46._.js
+|   |   |   |       |-- node_modules_next_dist_2eb74c46._.js.map
+|   |   |   |       |-- node_modules_next_dist_3b4d20e1._.js
+|   |   |   |       |-- node_modules_next_dist_3b4d20e1._.js.map
+|   |   |   |       |-- node_modules_next_dist_8021386d._.js
+|   |   |   |       |-- node_modules_next_dist_8021386d._.js.map
+|   |   |   |       |-- node_modules_next_dist_client_components_9774470f._.js
+|   |   |   |       |-- node_modules_next_dist_client_components_9774470f._.js.map
+|   |   |   |       |-- node_modules_next_dist_client_components_builtin_forbidden_45780354.js
+|   |   |   |       |-- node_modules_next_dist_client_components_builtin_forbidden_45780354.js.map
+|   |   |   |       |-- node_modules_next_dist_client_components_builtin_global-error_ece394eb.js
+|   |   |   |       |-- node_modules_next_dist_client_components_builtin_global-error_ece394eb.js.map
+|   |   |   |       |-- node_modules_next_dist_client_components_builtin_unauthorized_15817684.js
+|   |   |   |       `-- node_modules_next_dist_client_components_builtin_unauthorized_15817684.js.map
+|   |   |   |-- interception-route-rewrite-manifest.js
+|   |   |   |-- middleware-build-manifest.js
+|   |   |   |-- middleware-manifest.json
+|   |   |   |-- next-font-manifest.js
+|   |   |   |-- next-font-manifest.json
+|   |   |   |-- pages-manifest.json
+|   |   |   |-- server-reference-manifest.js
+|   |   |   `-- server-reference-manifest.json
+|   |   |-- static
+|   |   |   |-- chunks
+|   |   |   |   |-- [turbopack]_browser_dev_hmr-client_hmr-client_ts_bae88007._.js
+|   |   |   |   |-- [turbopack]_browser_dev_hmr-client_hmr-client_ts_bae88007._.js.map
+|   |   |   |   |-- [turbopack]_browser_dev_hmr-client_hmr-client_ts_c8c997ce._.js
+|   |   |   |   |-- [turbopack]_browser_dev_hmr-client_hmr-client_ts_c8c997ce._.js.map
+|   |   |   |   |-- [turbopack]_browser_dev_hmr-client_hmr-client_ts_f26f265a._.js
+|   |   |   |   |-- _45210fd5._.js.map
+|   |   |   |   |-- _a0ff3932._.js
+|   |   |   |   |-- _f7e8964a._.js
+|   |   |   |   |-- _f7e8964a._.js.map
+|   |   |   |   |-- node_modules_@swc_helpers_cjs_d80fb378._.js
+|   |   |   |   |-- node_modules_@swc_helpers_cjs_d80fb378._.js.map
+|   |   |   |   |-- node_modules_next_dist_094231d7._.js
+|   |   |   |   |-- node_modules_next_dist_094231d7._.js.map
+|   |   |   |   |-- node_modules_next_dist_7a8122d0._.js
+|   |   |   |   |-- node_modules_next_dist_7a8122d0._.js.map
+|   |   |   |   |-- node_modules_next_dist_build_polyfills_polyfill-nomodule.js
+|   |   |   |   |-- node_modules_next_dist_client_aaee43fe._.js
+|   |   |   |   |-- node_modules_next_dist_client_aaee43fe._.js.map
+|   |   |   |   |-- node_modules_next_dist_client_components_builtin_global-error_78cdd4a3.js
+|   |   |   |   |-- node_modules_next_dist_compiled_a0e4c7b4._.js
+|   |   |   |   |-- node_modules_next_dist_compiled_a0e4c7b4._.js.map
+|   |   |   |   |-- node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js
+|   |   |   |   |-- node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js.map
+|   |   |   |   |-- node_modules_next_dist_compiled_react-dom_1e674e59._.js
+|   |   |   |   |-- node_modules_next_dist_compiled_react-dom_1e674e59._.js.map
+|   |   |   |   |-- node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js
+|   |   |   |   |-- node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js.map
+|   |   |   |   |-- src_app_globals_91e4631d.css
+|   |   |   |   |-- src_app_globals_91e4631d.css.map
+|   |   |   |   |-- src_app_layout_tsx_78cdd4a3._.js
+|   |   |   |   |-- src_app_page_tsx_56f87536._.js
+|   |   |   |   `-- turbopack-_45210fd5._.js
+|   |   |   `-- development
+|   |   |       |-- _buildManifest.js
+|   |   |       |-- _clientMiddlewareManifest.json
+|   |   |       `-- _ssgManifest.js
+|   |   |-- trace
+|   |   `-- types
+|   |       |-- cache-life.d.ts
+|   |       |-- routes.d.ts
+|   |       `-- validator.ts
+|   |-- diagnostics
+|   |   |-- build-diagnostics.json
+|   |   `-- framework.json
+|   |-- export-marker.json
+|   |-- fallback-build-manifest.json
+|   |-- images-manifest.json
+|   |-- next-minimal-server.js.nft.json
+|   |-- next-server.js.nft.json
+|   |-- package.json
+|   |-- prerender-manifest.json
+|   |-- required-server-files.json
+|   |-- routes-manifest.json
+|   |-- server
+|   |   |-- app
+|   |   |   |-- _global-error
+|   |   |   |   |-- page
+|   |   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |   |-- build-manifest.json
+|   |   |   |   |   |-- next-font-manifest.json
+|   |   |   |   |   |-- react-loadable-manifest.json
+|   |   |   |   |   `-- server-reference-manifest.json
+|   |   |   |   |-- page.js
+|   |   |   |   |-- page.js.map
+|   |   |   |   |-- page.js.nft.json
+|   |   |   |   `-- page_client-reference-manifest.js
+|   |   |   |-- _global-error.html
+|   |   |   |-- _global-error.meta
+|   |   |   |-- _global-error.rsc
+|   |   |   |-- _global-error.segments
+|   |   |   |   |-- __PAGE__.segment.rsc
+|   |   |   |   |-- _full.segment.rsc
+|   |   |   |   |-- _head.segment.rsc
+|   |   |   |   |-- _index.segment.rsc
+|   |   |   |   `-- _tree.segment.rsc
+|   |   |   |-- _not-found
+|   |   |   |   |-- page
+|   |   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |   |-- build-manifest.json
+|   |   |   |   |   |-- next-font-manifest.json
+|   |   |   |   |   |-- react-loadable-manifest.json
+|   |   |   |   |   `-- server-reference-manifest.json
+|   |   |   |   |-- page.js
+|   |   |   |   |-- page.js.map
+|   |   |   |   |-- page.js.nft.json
+|   |   |   |   `-- page_client-reference-manifest.js
+|   |   |   |-- _not-found.html
+|   |   |   |-- _not-found.meta
+|   |   |   |-- _not-found.rsc
+|   |   |   |-- _not-found.segments
+|   |   |   |   |-- _full.segment.rsc
+|   |   |   |   |-- _head.segment.rsc
+|   |   |   |   |-- _index.segment.rsc
+|   |   |   |   |-- _not-found
+|   |   |   |   |   `-- __PAGE__.segment.rsc
+|   |   |   |   |-- _not-found.segment.rsc
+|   |   |   |   `-- _tree.segment.rsc
+|   |   |   |-- api
+|   |   |   |   |-- quantum
+|   |   |   |   |   |-- coherence
+|   |   |   |   |   |   |-- route
+|   |   |   |   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |   |   |   |-- build-manifest.json
+|   |   |   |   |   |   |   `-- server-reference-manifest.json
+|   |   |   |   |   |   |-- route.js
+|   |   |   |   |   |   |-- route.js.map
+|   |   |   |   |   |   |-- route.js.nft.json
+|   |   |   |   |   |   `-- route_client-reference-manifest.js
+|   |   |   |   |   `-- protection
+|   |   |   |   |       |-- route
+|   |   |   |   |       |   |-- app-paths-manifest.json
+|   |   |   |   |       |   |-- build-manifest.json
+|   |   |   |   |       |   `-- server-reference-manifest.json
+|   |   |   |   |       |-- route.js
+|   |   |   |   |       |-- route.js.map
+|   |   |   |   |       |-- route.js.nft.json
+|   |   |   |   |       `-- route_client-reference-manifest.js
+|   |   |   |   `-- quantum-coherence
+|   |   |   |       |-- route
+|   |   |   |       |   |-- app-paths-manifest.json
+|   |   |   |       |   |-- build-manifest.json
+|   |   |   |       |   `-- server-reference-manifest.json
+|   |   |   |       |-- route.js
+|   |   |   |       |-- route.js.map
+|   |   |   |       |-- route.js.nft.json
+|   |   |   |       `-- route_client-reference-manifest.js
+|   |   |   |-- index.html
+|   |   |   |-- index.meta
+|   |   |   |-- index.rsc
+|   |   |   |-- index.segments
+|   |   |   |   |-- __PAGE__.segment.rsc
+|   |   |   |   |-- _full.segment.rsc
+|   |   |   |   |-- _head.segment.rsc
+|   |   |   |   |-- _index.segment.rsc
+|   |   |   |   `-- _tree.segment.rsc
+|   |   |   |-- page
+|   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |-- build-manifest.json
+|   |   |   |   |-- next-font-manifest.json
+|   |   |   |   |-- react-loadable-manifest.json
+|   |   |   |   `-- server-reference-manifest.json
+|   |   |   |-- page.js
+|   |   |   |-- page.js.map
+|   |   |   |-- page.js.nft.json
+|   |   |   |-- page_client-reference-manifest.js
+|   |   |   |-- quantum-coherence
+|   |   |   |   |-- page
+|   |   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |   |-- build-manifest.json
+|   |   |   |   |   |-- next-font-manifest.json
+|   |   |   |   |   |-- react-loadable-manifest.json
+|   |   |   |   |   `-- server-reference-manifest.json
+|   |   |   |   |-- page.js
+|   |   |   |   |-- page.js.map
+|   |   |   |   |-- page.js.nft.json
+|   |   |   |   `-- page_client-reference-manifest.js
+|   |   |   |-- quantum-coherence.html
+|   |   |   |-- quantum-coherence.meta
+|   |   |   |-- quantum-coherence.rsc
+|   |   |   |-- quantum-coherence.segments
+|   |   |   |   |-- _full.segment.rsc
+|   |   |   |   |-- _head.segment.rsc
+|   |   |   |   |-- _index.segment.rsc
+|   |   |   |   |-- _tree.segment.rsc
+|   |   |   |   |-- quantum-coherence
+|   |   |   |   |   `-- __PAGE__.segment.rsc
+|   |   |   |   `-- quantum-coherence.segment.rsc
+|   |   |   |-- quantum-protection
+|   |   |   |   |-- page
+|   |   |   |   |   |-- app-paths-manifest.json
+|   |   |   |   |   |-- build-manifest.json
+|   |   |   |   |   |-- next-font-manifest.json
+|   |   |   |   |   |-- react-loadable-manifest.json
+|   |   |   |   |   `-- server-reference-manifest.json
+|   |   |   |   |-- page.js
+|   |   |   |   |-- page.js.map
+|   |   |   |   |-- page.js.nft.json
+|   |   |   |   `-- page_client-reference-manifest.js
+|   |   |   |-- quantum-protection.html
+|   |   |   |-- quantum-protection.meta
+|   |   |   |-- quantum-protection.rsc
+|   |   |   `-- quantum-protection.segments
+|   |   |       |-- _full.segment.rsc
+|   |   |       |-- _head.segment.rsc
+|   |   |       |-- _index.segment.rsc
+|   |   |       |-- _tree.segment.rsc
+|   |   |       |-- quantum-protection
+|   |   |       |   `-- __PAGE__.segment.rsc
+|   |   |       `-- quantum-protection.segment.rsc
+|   |   |-- app-paths-manifest.json
+|   |   |-- chunks
+|   |   |   |-- [root-of-the-server]__55d7e724._.js
+|   |   |   |-- [root-of-the-server]__55d7e724._.js.map
+|   |   |   |-- [root-of-the-server]__71f5e76b._.js
+|   |   |   |-- [root-of-the-server]__71f5e76b._.js.map
+|   |   |   |-- [root-of-the-server]__b2da729a._.js
+|   |   |   |-- [root-of-the-server]__b2da729a._.js.map
+|   |   |   |-- [root-of-the-server]__dfc80f65._.js
+|   |   |   |-- [root-of-the-server]__dfc80f65._.js.map
+|   |   |   |-- [turbopack]_runtime.js
+|   |   |   |-- [turbopack]_runtime.js.map
+|   |   |   |-- _next-internal_server_app_api_quantum-coherence_route_actions_2c3f806b.js
+|   |   |   |-- _next-internal_server_app_api_quantum-coherence_route_actions_2c3f806b.js.map
+|   |   |   |-- _next-internal_server_app_api_quantum_coherence_route_actions_9fc42540.js
+|   |   |   |-- _next-internal_server_app_api_quantum_coherence_route_actions_9fc42540.js.map
+|   |   |   |-- _next-internal_server_app_api_quantum_protection_route_actions_35c93417.js
+|   |   |   |-- _next-internal_server_app_api_quantum_protection_route_actions_35c93417.js.map
+|   |   |   `-- ssr
+|   |   |       |-- [root-of-the-server]__04fb177e._.js
+|   |   |       |-- [root-of-the-server]__04fb177e._.js.map
+|   |   |       |-- [root-of-the-server]__15600e29._.js
+|   |   |       |-- [root-of-the-server]__15600e29._.js.map
+|   |   |       |-- [root-of-the-server]__3b5647d6._.js
+|   |   |       |-- [root-of-the-server]__3b5647d6._.js.map
+|   |   |       |-- [root-of-the-server]__3caaf4d0._.js
+|   |   |       |-- [root-of-the-server]__3caaf4d0._.js.map
+|   |   |       |-- [root-of-the-server]__56e9b183._.js
+|   |   |       |-- [root-of-the-server]__56e9b183._.js.map
+|   |   |       |-- [root-of-the-server]__655f8d11._.js
+|   |   |       |-- [root-of-the-server]__655f8d11._.js.map
+|   |   |       |-- [root-of-the-server]__65640f74._.js
+|   |   |       |-- [root-of-the-server]__65640f74._.js.map
+|   |   |       |-- [root-of-the-server]__6c5bae54._.js
+|   |   |       |-- [root-of-the-server]__6c5bae54._.js.map
+|   |   |       |-- [root-of-the-server]__b9356576._.js
+|   |   |       |-- [root-of-the-server]__b9356576._.js.map
+|   |   |       |-- [root-of-the-server]__c83baa34._.js
+|   |   |       |-- [root-of-the-server]__c83baa34._.js.map
+|   |   |       |-- [root-of-the-server]__d2bff17b._.js
+|   |   |       |-- [root-of-the-server]__d2bff17b._.js.map
+|   |   |       |-- [root-of-the-server]__f437da88._.js
+|   |   |       |-- [root-of-the-server]__f437da88._.js.map
+|   |   |       |-- [turbopack]_runtime.js
+|   |   |       |-- [turbopack]_runtime.js.map
+|   |   |       |-- _12f642a5._.js
+|   |   |       |-- _12f642a5._.js.map
+|   |   |       |-- _4bce1bc9._.js
+|   |   |       |-- _4bce1bc9._.js.map
+|   |   |       |-- _70718272._.js
+|   |   |       |-- _70718272._.js.map
+|   |   |       |-- _c1309523._.js
+|   |   |       |-- _c1309523._.js.map
+|   |   |       |-- _next-internal_server_app__global-error_page_actions_75761787.js
+|   |   |       |-- _next-internal_server_app__global-error_page_actions_75761787.js.map
+|   |   |       |-- _next-internal_server_app__not-found_page_actions_554ec2bf.js
+|   |   |       |-- _next-internal_server_app__not-found_page_actions_554ec2bf.js.map
+|   |   |       |-- _next-internal_server_app_page_actions_39d4fc33.js
+|   |   |       |-- _next-internal_server_app_page_actions_39d4fc33.js.map
+|   |   |       |-- _next-internal_server_app_quantum-coherence_page_actions_69635d14.js
+|   |   |       |-- _next-internal_server_app_quantum-coherence_page_actions_69635d14.js.map
+|   |   |       |-- _next-internal_server_app_quantum-protection_page_actions_2d1c1896.js
+|   |   |       |-- _next-internal_server_app_quantum-protection_page_actions_2d1c1896.js.map
+|   |   |       |-- node_modules_next_dist_08570d7f._.js
+|   |   |       |-- node_modules_next_dist_08570d7f._.js.map
+|   |   |       |-- node_modules_next_dist_190e08e1._.js
+|   |   |       |-- node_modules_next_dist_190e08e1._.js.map
+|   |   |       |-- node_modules_next_dist_a6fcb974._.js
+|   |   |       |-- node_modules_next_dist_a6fcb974._.js.map
+|   |   |       |-- node_modules_next_dist_cc88faaa._.js
+|   |   |       |-- node_modules_next_dist_cc88faaa._.js.map
+|   |   |       |-- node_modules_next_dist_client_components_9774470f._.js
+|   |   |       |-- node_modules_next_dist_client_components_9774470f._.js.map
+|   |   |       |-- node_modules_next_dist_client_components_builtin_forbidden_45780354.js
+|   |   |       |-- node_modules_next_dist_client_components_builtin_forbidden_45780354.js.map
+|   |   |       |-- node_modules_next_dist_client_components_builtin_global-error_ece394eb.js
+|   |   |       |-- node_modules_next_dist_client_components_builtin_global-error_ece394eb.js.map
+|   |   |       |-- node_modules_next_dist_client_components_builtin_unauthorized_15817684.js
+|   |   |       |-- node_modules_next_dist_client_components_builtin_unauthorized_15817684.js.map
+|   |   |       |-- node_modules_next_dist_esm_build_templates_app-page_65a7265e.js
+|   |   |       |-- node_modules_next_dist_esm_build_templates_app-page_65a7265e.js.map
+|   |   |       |-- src_app_layout_tsx_cc8184fa._.js
+|   |   |       `-- src_app_layout_tsx_cc8184fa._.js.map
+|   |   |-- functions-config-manifest.json
+|   |   |-- interception-route-rewrite-manifest.js
+|   |   |-- middleware-build-manifest.js
+|   |   |-- middleware-manifest.json
+|   |   |-- next-font-manifest.js
+|   |   |-- next-font-manifest.json
+|   |   |-- pages
+|   |   |   |-- 404.html
+|   |   |   `-- 500.html
+|   |   |-- pages-manifest.json
+|   |   |-- server-reference-manifest.js
+|   |   `-- server-reference-manifest.json
+|   |-- static
+|   |   |-- VKvL80sVypcwzJH_dkOPz
+|   |   |   |-- _buildManifest.js
+|   |   |   |-- _clientMiddlewareManifest.json
+|   |   |   `-- _ssgManifest.js
+|   |   `-- chunks
+|   |       |-- 15955e1632b07886.css
+|   |       |-- 171d47ee47206456.js
+|   |       |-- 1961d07f6097efff.js
+|   |       |-- 2139e000f4b5d584.js
+|   |       |-- 247eb132b7f7b574.js
+|   |       |-- 3a94daa1c77c8122.js
+|   |       |-- 6740f161f60c6ab5.js
+|   |       |-- a6dad97d9634a72d.js
+|   |       |-- af037731f4718021.js
+|   |       |-- fac5ae1e3fcd988d.js
+|   |       |-- ff1a16fafef87110.js
+|   |       `-- turbopack-455c41caa5c7697a.js
+|   |-- trace
+|   |-- trace-build
+|   |-- turbopack
+|   `-- types
+|       |-- routes.d.ts
+|       `-- validator.ts
+|-- .vscode
+|   |-- extensions.json
+|   |-- launch.json
+|   |-- next-typescript.code-snippets
+|   |-- settings.json
+|   `-- tasks.json
+|-- AETHERIUS-CODEX
+|   `-- README.md
+|-- AETHERIUS-ETERNAL-BACKUP-RECOVERY-SYSTEM.md
+|-- AETHERIUS-ETERNAL-COMPREHENSIVE-MARKET-RESEARCH.md
+|-- AETHERIUS-ETERNAL-DOCUMENTATION-SYSTEM.md
+|-- AETHERIUS-ETERNAL-FINAL-VALIDATION.md
+|-- AETHERIUS-ETERNAL-FINANCIAL-MODELING.md
+|-- AETHERIUS-ETERNAL-GIT-OPERATIONS-COMPLETE.md
+|-- AETHERIUS-ETERNAL-GO-TO-MARKET-STRATEGY.md
+|-- AETHERIUS-ETERNAL-IMMEDIATE-MONETIZATION-STRATEGY.md
+|-- AETHERIUS-ETERNAL-MONETIZATION-ANALYSIS.md
+|-- AETHERIUS-ETERNAL-PERMANENT-CORE-MEMORY-INTEGRATION.md
+|-- AETHERIUS-ETERNAL-PRODUCTION-HARDENING-COMPLETE.md
+|-- AETHERIUS-ETERNAL-QUANTUM-ENHANCEMENT-COMPLETE.md
+|-- AETHERIUS-ETERNAL-REALISTIC-REVENUE-PROJECTIONS.md
+|-- AETHERIUS-ETERNAL-RECOVERY-ANALYSIS.md
+|-- AETHERIUS-ETERNAL-REVENUE-ANALYSIS.md
+|-- AETHERIUS-ETERNAL-SMART-GIT-OPERATIONS-REPORT.md
+|-- AETHERIUS-ETERNAL-SOLUTIONS-IMPLEMENTED.md
+|-- AETHERIUS-ETERNAL-SYSTEMS-UPDATE-COMPLETE.md
+|-- AETHERIUS-PRIME-BREAKTHROUGH-EXECUTION-REPORT.md
+|-- AETHERIUS-PRIME-FINAL-STATUS.md
+|-- AETHERIUS-PRIME-INFINITE-LOOP-BREAKTHROUGH-EXECUTION.js
+|-- AETHERIUS-PRIME-QUANTUM-INTELLIGENCE-STATUS.md
+|-- DEPLOYMENT.md
+|-- DUAL-GIT-OPERATIONS-COMPLETE.md
+|-- DUAL-REPOSITORY-OPERATIONS-COMPLETE.md
+|-- DUAL-REPOSITORY-SYNCHRONIZATION-STRATEGY.md
+|-- Dockerfile.production
+|-- HONEST-OPERATIONAL-ASSESSMENT.md
+|-- LICENSE
+|-- MICROSERVICE-BRANCH-ANALYSIS.md
+|-- QUANTUMFLOW-A-GRADE-VALIDATION.md
+|-- QUANTUMFLOW-DEPLOYMENT-SUCCESS.md
+|-- QUANTUMFLOW-DUAL-INTEGRATION.md
+|-- QUANTUMFLOW-INVESTOR-PITCH-DECK.md
+|-- QUANTUMFLOW-PERMANENT-CORE-MEMORY-INTEGRATION.md
+|-- README.md
+|-- REMOTE-SYNC-RESOLUTION-COMPLETE.md
+|-- REMOTE-SYNC-STATUS.md
+|-- SECRET-MANAGEMENT-POLICY.md
+|-- SMART-GIT-OPERATIONS-COMPLETE.md
+|-- UNIFIED-INTEGRATION-CONFIG.md
+|-- VERIFICATION-AND-VALIDATION-REPORT.md
+|-- aetherius-github-cli-enhanced-executor.js
+|-- aetherius-github-cli-enhanced-report.json
+|-- aetherius-manual-git-execution-report.json
+|-- aetherius-manual-git-executor.js
+|-- aetherius-prime-quantum-intelligence.json
+|-- audit_reports
+|   |-- audit_2025-12-10_02-34-01
+|   |   |-- ai_services_inventory.txt
+|   |   |-- config_files.txt
+|   |   |-- depcheck_report.txt
+|   |   |-- eslint_report.json
+|   |   |-- file_tree.txt
+|   |   |-- npm_security.json
+|   |   |-- outdated_dependencies.json
+|   |   |-- retire_security.json
+|   |   `-- secrets_scan.txt
+|   `-- audit_2025-12-10_21-12-48
+|       |-- file_tree.txt
+|       |-- npm_security.json
+|       |-- outdated_dependencies.json
+|       `-- secrets_scan.txt
+|-- db
+|   `-- custom.db
+|-- dev.db
+|-- docker-compose.production.yml
+|-- docs
+|   |-- CHANGELOG.md
+|   |-- KEYSTONE-CLI-IDE-USAGE.md
+|   |-- KEYSTONE-GIT-SMART-COMMANDS.md
+|   `-- README.md
+|-- eslint.config.js
+|-- gh.tar.gz
+|-- gh_2.40.0_linux_amd64
+|   |-- LICENSE
+|   |-- bin
+|   |   `-- gh
+|   `-- share
+|       `-- man
+|           `-- man1
+|               |-- gh-alias-delete.1
+|               |-- gh-alias-import.1
+|               |-- gh-alias-list.1
+|               |-- gh-alias-set.1
+|               |-- gh-alias.1
+|               |-- gh-api.1
+|               |-- gh-auth-login.1
+|               |-- gh-auth-logout.1
+|               |-- gh-auth-refresh.1
+|               |-- gh-auth-setup-git.1
+|               |-- gh-auth-status.1
+|               |-- gh-auth-switch.1
+|               |-- gh-auth-token.1
+|               |-- gh-auth.1
+|               |-- gh-browse.1
+|               |-- gh-cache-delete.1
+|               |-- gh-cache-list.1
+|               |-- gh-cache.1
+|               |-- gh-codespace-code.1
+|               |-- gh-codespace-cp.1
+|               |-- gh-codespace-create.1
+|               |-- gh-codespace-delete.1
+|               |-- gh-codespace-edit.1
+|               |-- gh-codespace-jupyter.1
+|               |-- gh-codespace-list.1
+|               |-- gh-codespace-logs.1
+|               |-- gh-codespace-ports-forward.1
+|               |-- gh-codespace-ports-visibility.1
+|               |-- gh-codespace-ports.1
+|               |-- gh-codespace-rebuild.1
+|               |-- gh-codespace-ssh.1
+|               |-- gh-codespace-stop.1
+|               |-- gh-codespace-view.1
+|               |-- gh-codespace.1
+|               |-- gh-completion.1
+|               |-- gh-config-clear-cache.1
+|               |-- gh-config-get.1
+|               |-- gh-config-list.1
+|               |-- gh-config-set.1
+|               |-- gh-config.1
+|               |-- gh-extension-browse.1
+|               |-- gh-extension-create.1
+|               |-- gh-extension-exec.1
+|               |-- gh-extension-install.1
+|               |-- gh-extension-list.1
+|               |-- gh-extension-remove.1
+|               |-- gh-extension-search.1
+|               |-- gh-extension-upgrade.1
+|               |-- gh-extension.1
+|               |-- gh-gist-clone.1
+|               |-- gh-gist-create.1
+|               |-- gh-gist-delete.1
+|               |-- gh-gist-edit.1
+|               |-- gh-gist-list.1
+|               |-- gh-gist-rename.1
+|               |-- gh-gist-view.1
+|               |-- gh-gist.1
+|               |-- gh-gpg-key-add.1
+|               |-- gh-gpg-key-delete.1
+|               |-- gh-gpg-key-list.1
+|               |-- gh-gpg-key.1
+|               |-- gh-issue-close.1
+|               |-- gh-issue-comment.1
+|               |-- gh-issue-create.1
+|               |-- gh-issue-delete.1
+|               |-- gh-issue-develop.1
+|               |-- gh-issue-edit.1
+|               |-- gh-issue-list.1
+|               |-- gh-issue-lock.1
+|               |-- gh-issue-pin.1
+|               |-- gh-issue-reopen.1
+|               |-- gh-issue-status.1
+|               |-- gh-issue-transfer.1
+|               |-- gh-issue-unlock.1
+|               |-- gh-issue-unpin.1
+|               |-- gh-issue-view.1
+|               |-- gh-issue.1
+|               |-- gh-label-clone.1
+|               |-- gh-label-create.1
+|               |-- gh-label-delete.1
+|               |-- gh-label-edit.1
+|               |-- gh-label-list.1
+|               |-- gh-label.1
+|               |-- gh-org-list.1
+|               |-- gh-org.1
+|               |-- gh-pr-checkout.1
+|               |-- gh-pr-checks.1
+|               |-- gh-pr-close.1
+|               |-- gh-pr-comment.1
+|               |-- gh-pr-create.1
+|               |-- gh-pr-diff.1
+|               |-- gh-pr-edit.1
+|               |-- gh-pr-list.1
+|               |-- gh-pr-lock.1
+|               |-- gh-pr-merge.1
+|               |-- gh-pr-ready.1
+|               |-- gh-pr-reopen.1
+|               |-- gh-pr-review.1
+|               |-- gh-pr-status.1
+|               |-- gh-pr-unlock.1
+|               |-- gh-pr-view.1
+|               |-- gh-pr.1
+|               |-- gh-project-close.1
+|               |-- gh-project-copy.1
+|               |-- gh-project-create.1
+|               |-- gh-project-delete.1
+|               |-- gh-project-edit.1
+|               |-- gh-project-field-create.1
+|               |-- gh-project-field-delete.1
+|               |-- gh-project-field-list.1
+|               |-- gh-project-item-add.1
+|               |-- gh-project-item-archive.1
+|               |-- gh-project-item-create.1
+|               |-- gh-project-item-delete.1
+|               |-- gh-project-item-edit.1
+|               |-- gh-project-item-list.1
+|               |-- gh-project-list.1
+|               |-- gh-project-mark-template.1
+|               |-- gh-project-view.1
+|               |-- gh-project.1
+|               |-- gh-release-create.1
+|               |-- gh-release-delete-asset.1
+|               |-- gh-release-delete.1
+|               |-- gh-release-download.1
+|               |-- gh-release-edit.1
+|               |-- gh-release-list.1
+|               |-- gh-release-upload.1
+|               |-- gh-release-view.1
+|               |-- gh-release.1
+|               |-- gh-repo-archive.1
+|               |-- gh-repo-clone.1
+|               |-- gh-repo-create.1
+|               |-- gh-repo-delete.1
+|               |-- gh-repo-deploy-key-add.1
+|               |-- gh-repo-deploy-key-delete.1
+|               |-- gh-repo-deploy-key-list.1
+|               |-- gh-repo-deploy-key.1
+|               |-- gh-repo-edit.1
+|               |-- gh-repo-fork.1
+|               |-- gh-repo-list.1
+|               |-- gh-repo-rename.1
+|               |-- gh-repo-set-default.1
+|               |-- gh-repo-sync.1
+|               |-- gh-repo-unarchive.1
+|               |-- gh-repo-view.1
+|               |-- gh-repo.1
+|               |-- gh-ruleset-check.1
+|               |-- gh-ruleset-list.1
+|               |-- gh-ruleset-view.1
+|               |-- gh-ruleset.1
+|               |-- gh-run-cancel.1
+|               |-- gh-run-delete.1
+|               |-- gh-run-download.1
+|               |-- gh-run-list.1
+|               |-- gh-run-rerun.1
+|               |-- gh-run-view.1
+|               |-- gh-run-watch.1
+|               |-- gh-run.1
+|               |-- gh-search-code.1
+|               |-- gh-search-commits.1
+|               |-- gh-search-issues.1
+|               |-- gh-search-prs.1
+|               |-- gh-search-repos.1
+|               |-- gh-search.1
+|               |-- gh-secret-delete.1
+|               |-- gh-secret-list.1
+|               |-- gh-secret-set.1
+|               |-- gh-secret.1
+|               |-- gh-ssh-key-add.1
+|               |-- gh-ssh-key-delete.1
+|               |-- gh-ssh-key-list.1
+|               |-- gh-ssh-key.1
+|               |-- gh-status.1
+|               |-- gh-variable-delete.1
+|               |-- gh-variable-list.1
+|               |-- gh-variable-set.1
+|               |-- gh-variable.1
+|               |-- gh-workflow-disable.1
+|               |-- gh-workflow-enable.1
+|               |-- gh-workflow-list.1
+|               |-- gh-workflow-run.1
+|               |-- gh-workflow-view.1
+|               |-- gh-workflow.1
+|               `-- gh.1
+|-- keystone
+|-- keystone-cli-ide
+|-- keystone-cli-ide-report.json
+|-- keystone-cli-ide.js
+|-- keystone-git
+|-- keystone-git-cli
+|-- keystone-git-quick.js
+|-- keystone-git-simple.js
+|-- keystone-git-smart.js
+|-- keystone-ide-enhancements.js
+|-- keystone-workflow.js
+|-- mini-services
+|   |-- auth-service
+|   |   `-- package-lock.json
+|   |-- database-service
+|   |   `-- package-lock.json
+|   `-- quantum-service
+|       `-- package-lock.json
+|-- next-env.d.ts
+|-- next.config.advanced.js
+|-- next.config.js
+|-- nginx
+|   `-- nginx.conf
+|-- package-lock.json
+|-- package.json
+|-- pnpm-lock.yaml
+|-- pnpm-workspace.yaml
+|-- postcss.config.js
+|-- prisma
+|   `-- schema.prisma
+|-- prisma.config.ts
+|-- qf_audit.sh
+|-- scripts
+|   |-- adaptive-dual-sync.sh
+|   |-- dual-repository-sync.sh
+|   |-- emergency-branch-sync.sh
+|   |-- git-history-cleanup.sh
+|   |-- intelligent-merge.sh
+|   `-- secret-scan.sh
+|-- search-solutions.js
+|-- secure-github-cli-package.json
+|-- src
+|   |-- app
+|   |   |-- api
+|   |   |   |-- quantum
+|   |   |   |   |-- coherence
+|   |   |   |   |   `-- route.ts
+|   |   |   |   `-- protection
+|   |   |   |       `-- route.ts
+|   |   |   `-- quantum-coherence
+|   |   |       `-- route.ts
+|   |   |-- globals.css
+|   |   |-- layout.tsx
+|   |   |-- page.tsx
+|   |   |-- quantum-coherence
+|   |   |   `-- page.tsx
+|   |   `-- quantum-protection
+|   |       `-- page.tsx
+|   |-- components
+|   |   |-- QuantumCoherenceDashboard.tsx
+|   |   `-- QuantumProtectionDashboard.tsx
+|   |-- hooks
+|   |   |-- useQuantumCoherence.ts
+|   |   `-- useQuantumProtection.ts
+|   |-- lib
+|   |   |-- db.ts
+|   |   |-- quantum-coherence-integration.ts
+|   |   |-- quantum-coherence-optimizer.ts
+|   |   |-- quantum-database-simple.ts
+|   |   |-- quantum-inspired-algorithms.ts
+|   |   |-- quantum-protection-integration.ts
+|   |   |-- quantum-protection-system.ts
+|   |   `-- utils.ts
+|   `-- types
+|       `-- index.ts
+|-- start-services.sh
+|-- stop-services.sh
+|-- tailwind.config.advanced.js
+|-- tailwind.config.js
+|-- tsconfig.json
+|-- tsconfig.tsbuildinfo
+|-- turbo.json
+`-- unified-cli.js
+
+88 directories, 691 files

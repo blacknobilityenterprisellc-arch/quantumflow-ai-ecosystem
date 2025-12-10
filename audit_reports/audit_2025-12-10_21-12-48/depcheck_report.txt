@@ -1,0 +1,24 @@
+Unused dependencies
+* @tailwindcss/postcss
+* @types/bcryptjs
+* @types/express
+* @types/jsonwebtoken
+* @types/pg
+* @types/redis
+* autoprefixer
+* bcryptjs
+* express
+* jsonwebtoken
+* pg
+* postcss
+* redis
+Unused devDependencies
+* @eslint/eslintrc
+* @octokit/rest
+* @types/react-dom
+* depcheck
+* eslint-config-next
+* retire
+Missing dependencies
+* dotenv: ./prisma.config.ts
+* @tailwindcss/container-queries: ./tailwind.config.advanced.js
