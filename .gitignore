@@ -70,6 +70,78 @@ web_modules/
 .env.*
 !.env.example
 
+# 🛡️ AETHERIUS-PRIME SECURITY: Secret files
+secrets/
+credentials/
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_rsa.pub
+private.key
+public.key
+cert.pem
+cert.key
+aws-credentials.json
+gcp-credentials.json
+azure-credentials.json
+service-account.json
+database-credentials.json
+api-keys.json
+secrets.txt
+passwords.txt
+tokens.txt
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Secret scan results
+secret-scan-results-*.txt
+security-audit-*.txt
+vulnerability-report-*.txt
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Backup files with secrets
+*.bak
+*.backup
+*-backup.*
+*-secrets.*
+*-credentials.*
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Temporary secret files
+tmp/secrets/
+temp/credentials/
+.cache/secrets/
+.secret-cache/
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Configuration with secrets
+config/secrets.json
+config/credentials.json
+config/private/
+config/secure/
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Development secret files
+dev-secrets.json
+dev-credentials.json
+local-secrets.json
+local-credentials.json
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Production secret files
+prod-secrets.json
+prod-credentials.json
+production-secrets.json
+production-credentials.json
+
+# 🛡️ AETHERIUS-PRIME SECURITY: CI/CD secret files
+.github/secrets/
+.gitlab/secrets/
+.circleci/secrets/
+.jenkins/secrets/
+
+# 🛡️ AETHERIUS-PRIME SECURITY: Infrastructure secret files
+terraform/secrets.tf
+terraform/terraform.tfvars
+ansible/secrets.yml
+docker/secrets.env
+k8s/secrets/
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

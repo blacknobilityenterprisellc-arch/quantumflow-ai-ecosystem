@@ -1,0 +1,124 @@
+name: 🛡️ AETHERIUS-PRIME Secret Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📁 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch full history for secret scanning
+        
+    - name: 🔍 Run TruffleHog Secret Scanner
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+        extra_args: --regex --entropy=False --max_depth=50
+        
+    - name: 🔍 Run Gitleaks Secret Scanner
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+        
+    - name: 🔍 Run Detect Secrets
+      run: |
+        pip install detect-secrets
+        detect-secrets scan --all-files --baseline .secrets.baseline || true
+        
+    - name: 📊 Generate Security Report
+      run: |
+        echo "# 🛡️ AETHERIUS-PRIME Security Scan Report" > security-report.md
+        echo "Generated: $(date)" >> security-report.md
+        echo "" >> security-report.md
+        echo "## Scan Results" >> security-report.md
+        echo "- TruffleHog: Completed" >> security-report.md
+        echo "- Gitleaks: Completed" >> security-report.md
+        echo "- Detect Secrets: Completed" >> security-report.md
+        echo "" >> security-report.md
+        echo "## Repository Status" >> security-report.md
+        if [ -f ".secrets.baseline" ]; then
+          echo "- ✅ Secrets baseline exists" >> security-report.md
+        else
+          echo "- ⚠️ No secrets baseline found" >> security-report.md
+        fi
+        
+    - name: 📋 Upload Security Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-report
+        path: security-report.md
+        
+    - name: 🚨 Alert on Secrets Found
+      if: failure()
+      run: |
+        echo "🚨 SECRETS DETECTED IN REPOSITORY!"
+        echo "Please review the scan results and remediate immediately."
+        exit 1
+
+  dependency-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📁 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Run OWASP Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'quantumflow-ai-ecosystem'
+        path: '.'
+        format: 'HTML'
+        
+    - name: 📋 Upload Dependency Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: dependency-report
+        path: reports/
+
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📁 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 📦 Install Dependencies
+      run: npm ci
+      
+    - name: 🔍 Run npm Audit
+      run: npm audit --audit-level=moderate
+      
+    - name: 🔍 Run Lint Security
+      run: |
+        npm install -g eslint-plugin-security
+        npx eslint . --ext .js,.jsx,.ts,.tsx --config .eslintrc.security.js || true
+        
+    - name: 📊 Generate Audit Report
+      run: |
+        echo "# 🔍 Security Audit Report" > audit-report.md
+        echo "Generated: $(date)" >> audit-report.md
+        echo "" >> audit-report.md
+        echo "## Audit Results" >> audit-report.md
+        echo "- npm audit: Completed" >> audit-report.md
+        echo "- ESLint security: Completed" >> audit-report.md
+        echo "" >> audit-report.md
+        echo "## Recommendations" >> audit-report.md
+        echo "1. Review and fix any high-severity vulnerabilities" >> audit-report.md
+        echo "2. Update dependencies to latest secure versions" >> audit-report.md
+        echo "3. Implement security best practices in code" >> audit-report.md
+        
+    - name: 📋 Upload Audit Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: audit-report
+        path: audit-report.md

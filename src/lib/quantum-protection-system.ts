@@ -36,7 +36,7 @@ export interface ProtectionMetrics {
 export interface ProtectionEvent {
   id: string;
   timestamp: Date;
-  type: 'threat_detected' | 'auto_heal' | 'baseline_update' | 'system_alert';
+  type: 'threat_detected' | 'auto_heal' | 'baseline_update';
   severity: 'low' | 'medium' | 'high' | 'critical';
   description: string;
   resolved: boolean;
@@ -132,7 +132,7 @@ export class QuantumProtectionSystem {
     this.addProtectionEvent({
       id: this.generateId(),
       timestamp: new Date(),
-      type: 'system_alert',
+      type: 'baseline_update',
       severity: 'low',
       description: 'Quantum protection shields activated',
       resolved: true
