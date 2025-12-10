@@ -325,7 +325,7 @@ class KeystoneSmartGit {
     // Check if there are staged changes
     const staged = getStagedFiles();
     if (staged.length === 0 && !amend) {
-      log('No staged changes to commit', 'warning');
+      this.log('No staged changes to commit', 'warning');
       return false;
     }
     
@@ -333,18 +333,18 @@ class KeystoneSmartGit {
       ? `git commit --amend -m "${message}"`
       : `git commit -m "${message}"`;
     
-    const result = execCommand(commitCmd, 'Smart commit');
+    const result = this.execCommand(commitCmd, 'Smart commit');
     if (!result.success) {
-      log('Smart commit failed', 'error');
+      this.log('Smart commit failed', 'error');
       return false;
     }
     
-    log('✅ Smart commit completed', 'success');
+    this.log('✅ Smart commit completed', 'success');
     return true;
   }
 
   async smartPush(options = {}) {
-    log('⚡ SMART PUSH - Intelligent Repository Updates', 'header');
+    this.log('⚡ SMART PUSH - Intelligent Repository Updates', 'header');
     
     const branch = options.branch || getCurrentBranch();
     const force = options.force || false;
@@ -355,26 +355,26 @@ class KeystoneSmartGit {
       ? `git push origin ${branch} --force`
       : `git push origin ${branch}`;
     
-    const result = execCommand(pushCmd, `Push to ${branch}`);
+    const result = this.execCommand(pushCmd, `Push to ${branch}`);
     if (!result.success) {
-      log('Smart push failed', 'error');
+      this.log('Smart push failed', 'error');
       return false;
     }
     
     // Push tags if requested
     if (tags) {
-      const tagResult = execCommand('git push origin --tags', 'Push tags');
+      const tagResult = this.execCommand('git push origin --tags', 'Push tags');
       if (!tagResult.success) {
-        log('Tag push failed', 'warning');
+        this.log('Tag push failed', 'warning');
       }
     }
     
-    log('✅ Smart push completed', 'success');
+    this.log('✅ Smart push completed', 'success');
     return true;
   }
 
   async smartPull(options = {}) {
-    log('⚡ SMART PULL - Intelligent Repository Updates', 'header');
+    this.log('⚡ SMART PULL - Intelligent Repository Updates', 'header');
     
     const branch = options.branch || getCurrentBranch();
     const rebase = options.rebase || false;
@@ -383,24 +383,24 @@ class KeystoneSmartGit {
       ? `git pull origin ${branch} --rebase`
       : `git pull origin ${branch}`;
     
-    const result = execCommand(pullCmd, `Pull from ${branch}`);
+    const result = this.execCommand(pullCmd, `Pull from ${branch}`);
     if (!result.success) {
-      log('Smart pull failed', 'error');
+      this.log('Smart pull failed', 'error');
       return false;
     }
     
-    log('✅ Smart pull completed', 'success');
+    this.log('✅ Smart pull completed', 'success');
     return true;
   }
 
   async smartStatus() {
-    log('⚡ SMART STATUS - Intelligent Repository Analysis', 'header');
+    this.log('⚡ SMART STATUS - Intelligent Repository Analysis', 'header');
     
     // Get comprehensive status
-    const status = execCommand('git status', 'Repository status');
-    const branch = execCommand('git branch --show-current', 'Current branch');
-    const remote = execCommand('git remote -v', 'Remote repositories');
-    const log = execCommand('git log --oneline -5', 'Recent commits');
+    const status = this.execCommand('git status', 'Repository status');
+    const branch = this.execCommand('git branch --show-current', 'Current branch');
+    const remote = this.execCommand('git remote -v', 'Remote repositories');
+    const log = this.execCommand('git log --oneline -5', 'Recent commits');
     
     // Analyze changes
     const changedFiles = getChangedFiles();
@@ -409,75 +409,75 @@ class KeystoneSmartGit {
       .filter(line => line.startsWith('??'))
       .map(line => line.substring(3));
     
-    log(`📊 Repository Analysis:`, 'smart');
-    log(`  Branch: ${branch.output.trim()}`, 'info');
-    log(`  Changed files: ${changedFiles.length}`, 'info');
-    log(`  Staged files: ${stagedFiles.length}`, 'info');
-    log(`  Untracked files: ${untrackedFiles.length}`, 'info');
+    this.log(`📊 Repository Analysis:`, 'smart');
+    this.log(`  Branch: ${branch.output.trim()}`, 'info');
+    this.log(`  Changed files: ${changedFiles.length}`, 'info');
+    this.log(`  Staged files: ${stagedFiles.length}`, 'info');
+    this.log(`  Untracked files: ${untrackedFiles.length}`, 'info');
     
     if (changedFiles.length > 0) {
-      log(`📝 Modified files:`, 'info');
-      changedFiles.forEach(file => log(`  • ${file}`, 'info'));
+      this.log(`📝 Modified files:`, 'info');
+      changedFiles.forEach(file => this.log(`  • ${file}`, 'info'));
     }
     
     if (untrackedFiles.length > 0) {
-      log(`🆕 Untracked files:`, 'info');
-      untrackedFiles.forEach(file => log(`  • ${file}`, 'info'));
+      this.log(`🆕 Untracked files:`, 'info');
+      untrackedFiles.forEach(file => this.log(`  • ${file}`, 'info'));
     }
     
-    log('✅ Smart status completed', 'success');
+    this.log('✅ Smart status completed', 'success');
     return true;
   }
 
   async smartSync(options = {}) {
-    log('⚡ SMART SYNC - Complete Repository Synchronization', 'header');
+    this.log('⚡ SMART SYNC - Complete Repository Synchronization', 'header');
     
     const success = await this.smartPull(options);
     if (!success) {
-      log('Smart sync failed during pull', 'error');
+      this.log('Smart sync failed during pull', 'error');
       return false;
     }
     
     const pushSuccess = await this.smartPush(options);
     if (!pushSuccess) {
-      log('Smart sync failed during push', 'error');
+      this.log('Smart sync failed during push', 'error');
       return false;
     }
     
-    log('✅ Smart sync completed', 'success');
+    this.log('✅ Smart sync completed', 'success');
     return true;
   }
 
   async quickCommit(options = {}) {
-    log('⚡ QUICK COMMIT - One-Shot Complete Operation', 'header');
+    this.log('⚡ QUICK COMMIT - One-Shot Complete Operation', 'header');
     
     // Add all changes
     const addSuccess = await this.smartAdd({ all: true });
     if (!addSuccess) {
-      log('Quick commit failed during add', 'error');
+      this.log('Quick commit failed during add', 'error');
       return false;
     }
     
     // Smart commit
     const commitSuccess = await this.smartCommit(options);
     if (!commitSuccess) {
-      log('Quick commit failed during commit', 'error');
+      this.log('Quick commit failed during commit', 'error');
       return false;
     }
     
     // Smart push
     const pushSuccess = await this.smartPush(options);
     if (!pushSuccess) {
-      log('Quick commit failed during push', 'error');
+      this.log('Quick commit failed during push', 'error');
       return false;
     }
     
-    log('✅ Quick commit completed - All operations successful', 'success');
+    this.log('✅ Quick commit completed - All operations successful', 'success');
     return true;
   }
 
   async smartTag(options = {}) {
-    log('⚡ SMART TAG - Intelligent Tag Management', 'header');
+    this.log('⚡ SMART TAG - Intelligent Tag Management', 'header');
     
     const version = options.version || `v${Date.now()}`;
     const message = options.message || `Release ${version}`;
@@ -485,21 +485,21 @@ class KeystoneSmartGit {
     
     // Create tag
     const tagCmd = `git tag -a ${version} -m "${message}"`;
-    const result = execCommand(tagCmd, `Create tag ${version}`);
+    const result = this.execCommand(tagCmd, `Create tag ${version}`);
     if (!result.success) {
-      log('Smart tag failed', 'error');
+      this.log('Smart tag failed', 'error');
       return false;
     }
     
     // Push tag if requested
     if (push) {
-      const pushResult = execCommand(`git push origin ${version}`, `Push tag ${version}`);
+      const pushResult = this.execCommand(`git push origin ${version}`, `Push tag ${version}`);
       if (!pushResult.success) {
-        log('Tag push failed', 'warning');
+        this.log('Tag push failed', 'warning');
       }
     }
     
-    log(`✅ Smart tag completed: ${version}`, 'success');
+    this.log(`✅ Smart tag completed: ${version}`, 'success');
     return true;
   }
 }
