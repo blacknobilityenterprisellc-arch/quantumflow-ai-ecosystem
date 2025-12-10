@@ -1,0 +1,245 @@
+<<<<<<< HEAD
+=======
+/**
+ * @author Jocely P. Honore
+ * @company Black Nobility Management & Enterprise LLC
+ * @subcompany Nobility Digital Empire
+ * @project Keystone AI Ecosystem Premium Diamond-Grade
+ * @version 9.0.0-nextjs16
+ * @description Premium Diamond-Grade Development Tools
+ * @license MIT
+ * @date 2025-11-17T22:14:08.032Z
+ */
+
+>>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+<<<<<<< HEAD
+      "cache": true,
+      "env": ["NODE_ENV"],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "package.json"]
+=======
+      "env": {
+        "TURBOPACK": "1"
+      }
+>>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+<<<<<<< HEAD
+      "passThroughEnv": ["NODE_ENV", "PORT", "NEXT_TELEMETRY_DISABLED"]
+    },
+    "lint": {
+      "outputs": [],
+      "cache": true,
+      "dependsOn": ["^lint"],
+      "inputs": ["src/**/*.ts", "src/**/*.tsx", "*.config.*"]
+    },
+    "test": {
+      "outputs": ["coverage/**"],
+      "cache": true,
+      "dependsOn": ["build"],
+      "inputs": ["src/**/*.test.*", "**/__tests__/**"]
+    },
+    "type-check": {
+      "dependsOn": ["^type-check"],
+      "outputs": [],
+      "cache": true,
+      "inputs": ["src/**/*.ts", "src/**/*.tsx"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "aetherius:analyze": {
+      "dependsOn": ["build"],
+      "outputs": ["reports/**"],
+      "cache": true,
+      "inputs": ["src/**/*", "scripts/**/*"]
+    },
+    "quantum:optimize": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**"],
+      "cache": true,
+      "inputs": ["src/**/*"]
+=======
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "lint:fix": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "type-check": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "clean": {
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:generate": {
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:push": {
+      "dependsOn": ["db:generate"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:seed": {
+      "dependsOn": ["db:push"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "db:reset": {
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "format": {
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "deploy": {
+      "dependsOn": ["build", "test", "lint"],
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "analyze": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "tunnel": {
+      "dependsOn": ["dev"],
+      "cache": false,
+      "persistent": true,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "ai:chat": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "ai:image": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+    },
+    "ai:search": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "env": {
+        "TURBOPACK": "1"
+      }
+>>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+    }
+  },
+  "globalEnv": [
+    "NODE_ENV",
+<<<<<<< HEAD
+    "NEXT_PUBLIC_API_URL",
+    "NEXT_PUBLIC_APP_URL",
+    "DATABASE_URL",
+    "ZAI_API_KEY",
+    "AETHERIUS_PRIME_MODE",
+    "QUANTUM_COHERENCE_LEVEL",
+    "AETHERIUS_ETERNAL_INTELLIGENCE",
+    "NEURAL_LATTICE_DIMENSIONS",
+    "QUANTUM_ENTANGLEMENT_PAIRS"
+  ],
+  "env": {
+    "AETHERIUS_ETERNAL_MODE": "ACTIVE",
+    "QUANTUM_COHERENCE_TARGET": "0.999",
+    "NEURAL_SYNC_FREQUENCY": "40Hz"
+  }
+=======
+    "NEXT_PUBLIC_*",
+    "ZAI_API_KEY",
+    "GEMINI_API_KEY",
+    "OPENROUTER_API_KEY",
+    "SAMBA_NOVA_AI",
+    "GOOGLE_ANALYTICS_ID",
+    "NEON_API_KEY",
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "POSTGRES_URL",
+    "BREVO_API_KEY",
+    "STRIPE_PUBLISHABLE_KEY",
+    "STRIPE_SECRET_KEY",
+    "YOUTUBE_API_KEY",
+    "NGROK_AUTH_TOKEN"
+  ]
+>>>>>>> b706cc6624281f48061329beb8d39b865ca4739e
+}
