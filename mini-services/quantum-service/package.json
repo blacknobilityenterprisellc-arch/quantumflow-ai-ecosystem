@@ -1,0 +1,35 @@
+{
+  "name": "@quantumflow/quantum-service",
+  "version": "1.0.0",
+  "description": "🧠 AETHERIUS-ETERNAL Quantum Service - Advanced quantum coherence and optimization algorithms",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "start": "tsx index.ts",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "quantum",
+    "coherence",
+    "optimization",
+    "ai",
+    "quantumflow",
+    "aetherius-eternal"
+  ],
+  "author": "Jocely P. Honore",
+  "license": "MIT",
+  "dependencies": {
+    "z-ai-web-dev-sdk": "^0.0.11"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
