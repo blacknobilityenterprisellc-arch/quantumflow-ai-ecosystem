@@ -16,7 +16,8 @@
     "helmet": "^7.1.0",
     "express-rate-limit": "^7.1.5",
     "winston": "^3.11.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "prom-client": "^15.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",

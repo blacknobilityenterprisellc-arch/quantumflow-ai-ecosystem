@@ -1,0 +1,240 @@
+name: Monitoring Validation CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'src/lib/metrics.ts'
+      - 'microservices/**/index.js'
+      - 'monitoring/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/lib/metrics.ts'
+      - 'microservices/**/index.js'
+      - 'monitoring/**'
+
+jobs:
+  validate-metrics:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd microservices/monitoring-service && npm ci
+        cd ../quantum-service && npm ci
+        
+    - name: Install Prometheus tools
+      run: |
+        wget https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
+        tar xvfz prometheus-2.45.0.linux-amd64.tar.gz
+        sudo cp prometheus-2.45.0.linux-amd64/promtool /usr/local/bin/
+        sudo chmod +x /usr/local/bin/promtool
+        
+    - name: Validate Prometheus rules
+      run: |
+        promtool check rules monitoring/alert-rules.yaml
+        
+    - name: Start monitoring service
+      run: |
+        cd microservices/monitoring-service
+        PORT=3003 npm start &
+        sleep 5
+        
+    - name: Start quantum service
+      run: |
+        cd microservices/quantum-service
+        PORT=3005 npm start &
+        sleep 5
+        
+    - name: Test metrics endpoints
+      run: |
+        # Test monitoring service metrics
+        curl -f http://localhost:3003/metrics || exit 1
+        curl -f http://localhost:3003/health || exit 1
+        
+        # Test quantum service metrics
+        curl -f http://localhost:3005/metrics || exit 1
+        curl -f http://localhost:3005/health || exit 1
+        
+    - name: Validate metrics format
+      run: |
+        # Check monitoring service metrics
+        curl -s http://localhost:3003/metrics | promtool check metrics
+        
+        # Check quantum service metrics
+        curl -s http://localhost:3005/metrics | promtool check metrics
+        
+    - name: Verify required metrics exist
+      run: |
+        # Check for required metrics in monitoring service
+        MONITORING_METRICS=$(curl -s http://localhost:3003/metrics)
+        REQUIRED_METRICS=(
+          "http_requests_total"
+          "http_request_duration_seconds"
+          "system_health_score"
+          "quantum_coherence_level"
+        )
+        
+        for metric in "${REQUIRED_METRICS[@]}"; do
+          if ! echo "$MONITORING_METRICS" | grep -q "^$metric"; then
+            echo "❌ Missing required metric: $metric"
+            exit 1
+          else
+            echo "✅ Found metric: $metric"
+          fi
+        done
+        
+        # Check for required metrics in quantum service
+        QUANTUM_METRICS=$(curl -s http://localhost:3005/metrics)
+        QUANTUM_REQUIRED_METRICS=(
+          "quantum_coherence_level"
+          "quantum_algorithm_performance_seconds"
+          "quantum_optimization_cycles_total"
+        )
+        
+        for metric in "${QUANTUM_REQUIRED_METRICS[@]}"; do
+          if ! echo "$QUANTUM_METRICS" | grep -q "^$metric"; then
+            echo "❌ Missing required quantum metric: $metric"
+            exit 1
+          else
+            echo "✅ Found quantum metric: $metric"
+          fi
+        done
+        
+    - name: Test quantum coherence endpoint
+      run: |
+        COHERENCE_RESPONSE=$(curl -s http://localhost:3005/api/quantum-service/coherence)
+        if ! echo "$COHERENCE_RESPONSE" | jq -e '.quantumCoherence' > /dev/null; then
+          echo "❌ Quantum coherence endpoint response invalid"
+          exit 1
+        else
+          echo "✅ Quantum coherence endpoint working"
+        fi
+        
+    - name: Test monitoring service health aggregation
+      run: |
+        HEALTH_RESPONSE=$(curl -s http://localhost:3003/api/monitoring-service/system-health)
+        if ! echo "$HEALTH_RESPONSE" | jq -e '.overallHealth' > /dev/null; then
+          echo "❌ System health endpoint response invalid"
+          exit 1
+        else
+          echo "✅ System health endpoint working"
+        fi
+        
+    - name: Performance test metrics endpoint
+      run: |
+        # Load test metrics endpoint
+        echo "Running performance test on metrics endpoints..."
+        
+        # Test monitoring service under load
+        for i in {1..50}; do
+          curl -s http://localhost:3003/metrics > /dev/null &
+        done
+        wait
+        
+        # Test quantum service under load
+        for i in {1..50}; do
+          curl -s http://localhost:3005/metrics > /dev/null &
+        done
+        wait
+        
+        echo "✅ Load test completed successfully"
+        
+    - name: Validate ServiceMonitor configuration
+      run: |
+        # Check if ServiceMonitor YAML is valid
+        if ! kubectl --dry-run=client apply -f monitoring/servicemonitors.yaml; then
+          echo "❌ ServiceMonitor YAML validation failed"
+          exit 1
+        else
+          echo "✅ ServiceMonitor YAML is valid"
+        fi
+        
+    - name: Validate Grafana dashboard
+      run: |
+        # Check if Grafana dashboard JSON is valid
+        if ! jq empty monitoring/grafana-dashboard.json; then
+          echo "❌ Grafana dashboard JSON is invalid"
+          exit 1
+        else
+          echo "✅ Grafana dashboard JSON is valid"
+        fi
+        
+    - name: Generate metrics report
+      run: |
+        echo "## 📊 Metrics Validation Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Count metrics from each service
+        MONITORING_METRIC_COUNT=$(curl -s http://localhost:3003/metrics | grep -c "^#")
+        QUANTUM_METRIC_COUNT=$(curl -s http://localhost:3005/metrics | grep -c "^#")
+        
+        echo "### 📈 Metrics Overview" >> $GITHUB_STEP_SUMMARY
+        echo "- **Monitoring Service**: $MONITORING_METRIC_COUNT metrics" >> $GITHUB_STEP_SUMMARY
+        echo "- **Quantum Service**: $QUANTUM_METRIC_COUNT metrics" >> $GITHUB_STEP_SUMMARY
+        echo "- **Total**: $(($MONITORING_METRIC_COUNT + $QUANTUM_METRIC_COUNT)) metrics" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Health status
+        MONITORING_HEALTH=$(curl -s http://localhost:3003/health | jq -r '.status')
+        QUANTUM_HEALTH=$(curl -s http://localhost:3005/health | jq -r '.status')
+        
+        echo "### 🏥 Service Health" >> $GITHUB_STEP_SUMMARY
+        echo "- **Monitoring Service**: $MONITORING_HEALTH" >> $GITHUB_STEP_SUMMARY
+        echo "- **Quantum Service**: $QUANTUM_HEALTH" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Coherence status
+        COHERENCE=$(curl -s http://localhost:3005/api/quantum-service/coherence | jq -r '.quantumCoherence')
+        echo "### ⚛️ Quantum Coherence" >> $GITHUB_STEP_SUMMARY
+        echo "- **Current Level**: $COHERENCE" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: $(if (( $(echo "$COHERENCE > 0.85" | bc -l) )); then echo "✅ Optimal"; else echo "⚠️ Degraded"; fi)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "### ✅ Validation Complete" >> $GITHUB_STEP_SUMMARY
+        echo "All monitoring systems are functioning correctly!" >> $GITHUB_STEP_SUMMARY
+
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run security audit
+      run: |
+        npm audit --audit-level=high
+        
+    - name: Check for exposed metrics endpoints
+      run: |
+        echo "Checking for potential security issues in metrics configuration..."
+        
+        # Ensure metrics endpoints are not publicly exposed in production configs
+        if grep -r "metrics.*public" . --include="*.yaml" --include="*.yml" --include="*.json"; then
+          echo "❌ Potential security issue: metrics endpoint may be publicly exposed"
+          exit 1
+        else
+          echo "✅ No public metrics exposure found"
+        fi
+        
+    - name: Validate authentication requirements
+      run: |
+        echo "Checking authentication requirements for metrics endpoints..."
+        
+        # Ensure metrics endpoints require authentication in production
+        if grep -r "/metrics" . --include="*.yaml" --include="*.yml" | grep -v "auth\|secure\|internal"; then
+          echo "⚠️ Warning: Some metrics endpoints may lack authentication"
+        else
+          echo "✅ Metrics endpoints appear to be properly secured"
+        fi

@@ -1,0 +1,262 @@
+# Prometheus Alert Rules for QuantumFlow Microservices
+# These rules monitor critical system health, performance, and business metrics
+
+groups:
+  # ==== QUANTUM COHERENCE ALERTS ====
+  - name: quantumflow.quantum.rules
+    rules:
+      - alert: LowQuantumCoherence
+        expr: avg_over_time(quantum_coherence_level{service="quantum-service"}[5m]) < 0.85
+        for: 3m
+        labels:
+          severity: critical
+          service: quantum-service
+          component: quantum-coherence
+        annotations:
+          summary: "Quantum coherence dropped below 0.85 for 3 minutes"
+          description: "Quantum coherence level is {{ $value }} for service {{ $labels.service }} and algorithm {{ $labels.algorithm }}"
+          runbook_url: "https://runbooks.quantumflow.ai/quantum-coherence"
+          dashboard_url: "https://grafana.quantumflow.ai/d/quantum-coherence"
+
+      - alert: CriticalQuantumCoherence
+        expr: avg_over_time(quantum_coherence_level{service="quantum-service"}[2m]) < 0.7
+        for: 1m
+        labels:
+          severity: critical
+          service: quantum-service
+          component: quantum-coherence
+        annotations:
+          summary: "CRITICAL: Quantum coherence below 0.7"
+          description: "Quantum coherence has dropped to {{ $value }} - immediate attention required"
+
+      - alert: QuantumAlgorithmFailure
+        expr: rate(quantum_optimization_cycles_total{success="false"}[5m]) / rate(quantum_optimization_cycles_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          service: quantum-service
+          component: quantum-algorithms
+        annotations:
+          summary: "High quantum algorithm failure rate"
+          description: "Algorithm failure rate is {{ $value | humanizePercentage }} for {{ $labels.algorithm }}"
+
+  # ==== HTTP PERFORMANCE ALERTS ====
+  - name: quantumflow.http.rules
+    rules:
+      - alert: HighRequestLatency
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service=~".*-service"}[5m])) by (le, service)) > 1.0
+        for: 2m
+        labels:
+          severity: warning
+          component: http-performance
+        annotations:
+          summary: "High 95th percentile latency for {{ $labels.service }}"
+          description: "95th percentile latency is {{ $value }}s for service {{ $labels.service }}"
+
+      - alert: CriticalRequestLatency
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service=~".*-service"}[2m])) by (le, service)) > 2.0
+        for: 1m
+        labels:
+          severity: critical
+          component: http-performance
+        annotations:
+          summary: "CRITICAL: Extremely high latency for {{ $labels.service }}"
+          description: "95th percentile latency is {{ $value }}s - service may be degraded"
+
+      - alert: HighErrorRate
+        expr: sum(rate(http_requests_total{service=~".*-service",statusCode=~"5.."}[5m])) by (service) / sum(rate(http_requests_total{service=~".*-service"}[5m])) by (service) > 0.02
+        for: 5m
+        labels:
+          severity: warning
+          component: http-errors
+        annotations:
+          summary: "Error rate exceeded 2% for {{ $labels.service }}"
+          description: "Error rate is {{ $value | humanizePercentage }} for service {{ $labels.service }}"
+
+      - alert: CriticalErrorRate
+        expr: sum(rate(http_requests_total{service=~".*-service",statusCode=~"5.."}[2m])) by (service) / sum(rate(http_requests_total{service=~".*-service"}[2m])) by (service) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+          component: http-errors
+        annotations:
+          summary: "CRITICAL: Error rate exceeded 5% for {{ $labels.service }}"
+          description: "Error rate is {{ $value | humanizePercentage }} - service may be down"
+
+  # ==== SYSTEM HEALTH ALERTS ====
+  - name: quantumflow.system.rules
+    rules:
+      - alert: LowSystemHealth
+        expr: avg_over_time(system_health_score{service=~".*-service"}[5m]) < 80
+        for: 3m
+        labels:
+          severity: warning
+          component: system-health
+        annotations:
+          summary: "System health score below 80 for {{ $labels.service }}"
+          description: "Health score is {{ $value }} for {{ $labels.service }} component {{ $labels.component }}"
+
+      - alert: CriticalSystemHealth
+        expr: avg_over_time(system_health_score{service=~".*-service"}[2m]) < 60
+        for: 1m
+        labels:
+          severity: critical
+          component: system-health
+        annotations:
+          summary: "CRITICAL: System health below 60 for {{ $labels.service }}"
+          description: "Health score is {{ $value }} - immediate attention required"
+
+      - alert: HighMemoryUsage
+        expr: (memory_usage_bytes{type="heapUsed"} / memory_usage_bytes{type="rss"}) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          component: memory
+        annotations:
+          summary: "High memory usage for {{ $labels.service }}"
+          description: "Memory usage is {{ $value | humanizePercentage }} of RSS"
+
+      - alert: CriticalMemoryUsage
+        expr: (memory_usage_bytes{type="heapUsed"} / memory_usage_bytes{type="rss"}) > 0.95
+        for: 2m
+        labels:
+          severity: critical
+          component: memory
+        annotations:
+          summary: "CRITICAL: Memory usage above 95% for {{ $labels.service }}"
+          description: "Memory usage is {{ $value | humanizePercentage }} - service may crash"
+
+  # ==== BUSINESS METRICS ALERTS ====
+  - name: quantumflow.business.rules
+    rules:
+      - alert: LowActiveSessions
+        expr: user_sessions_active < 10
+        for: 10m
+        labels:
+          severity: warning
+          component: business-metrics
+        annotations:
+          summary: "Low number of active user sessions"
+          description: "Only {{ $value }} active sessions detected"
+
+      - alert: NoTransactions
+        expr: rate(transactions_processed_total[10m]) == 0
+        for: 15m
+        labels:
+          severity: warning
+          component: business-metrics
+        annotations:
+          summary: "No transactions processed in last 15 minutes"
+          description: "Transaction processing may be stalled"
+
+      - alert: HighTransactionFailureRate
+        expr: rate(transactions_processed_total{status="failed"}[5m]) / rate(transactions_processed_total[5m]) > 0.05
+        for: 3m
+        labels:
+          severity: warning
+          component: business-metrics
+        annotations:
+          summary: "High transaction failure rate"
+          description: "Transaction failure rate is {{ $value | humanizePercentage }}"
+
+  # ==== SECURITY ALERTS ====
+  - name: quantumflow.security.rules
+    rules:
+      - alert: HighSecurityEvents
+        expr: rate(security_events_total[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High rate of security events"
+          description: "Security event rate is {{ $value }} events/second"
+
+      - alert: CriticalSecurityEvents
+        expr: rate(security_events_total{severity="critical"}[2m]) > 1
+        for: 1m
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "CRITICAL: Critical security events detected"
+          description: "Critical security event rate is {{ $value }} events/second"
+
+      - alert: HighAuthenticationFailures
+        expr: rate(authentication_attempts_total{result="failed"}[5m]) / rate(authentication_attempts_total[5m]) > 0.2
+        for: 3m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High authentication failure rate"
+          description: "Authentication failure rate is {{ $value | humanizePercentage }}"
+
+  # ==== DATABASE ALERTS ====
+  - name: quantumflow.database.rules
+    rules:
+      - alert: HighDatabaseConnections
+        expr: database_connections{state="active"} > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High number of database connections"
+          description: "{{ $value }} active database connections for {{ $labels.database }}"
+
+      - alert: SlowDatabaseQueries
+        expr: histogram_quantile(0.95, sum(rate(database_query_duration_seconds_bucket[5m])) by (le, service, database)) > 1.0
+        for: 3m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Slow database queries for {{ $labels.database }}"
+          description: "95th percentile query time is {{ $value }}s"
+
+  # ==== SERVICE AVAILABILITY ALERTS ====
+  - name: quantumflow.availability.rules
+    rules:
+      - alert: ServiceDown
+        expr: up{job=~".*-service"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: availability
+        annotations:
+          summary: "Service {{ $labels.service }} is down"
+          description: "Service {{ $labels.service }} has been down for more than 1 minute"
+
+      - alert: ServiceScrapeFailure
+        expr: scrape_failed{job=~".*-service"} > 0
+        for: 2m
+        labels:
+          severity: warning
+          component: availability
+        annotations:
+          summary: "Metrics scrape failed for {{ $labels.service }}"
+          description: "Failed to scrape metrics from {{ $labels.service }}"
+
+  # ==== INFRASTRUCTURE ALERTS ====
+  - name: quantumflow.infrastructure.rules
+    rules:
+      - alert: HighCPUUsage
+        expr: cpu_utilization_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: infrastructure
+        annotations:
+          summary: "High CPU usage for {{ $labels.service }}"
+          description: "CPU usage is {{ $value }}%"
+
+      - alert: LowCacheHitRate
+        expr: cache_hit_rate < 0.8
+        for: 10m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Low cache hit rate for {{ $labels.cache }}"
+          description: "Cache hit rate is {{ $value | humanizePercentage }}"

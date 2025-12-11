@@ -1,0 +1,307 @@
+# ServiceMonitor for QuantumFlow Microservices
+# This configuration enables Prometheus to automatically discover and scrape metrics from all microservices
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: quantumflow-microservices
+  namespace: quantumflow
+  labels:
+    app: quantumflow
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/part-of: quantumflow
+  namespaceSelector:
+    any: true
+  endpoints:
+    # Monitoring Service
+    - port: metrics
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+        - sourceLabels: [__meta_kubernetes_namespace]
+          targetLabel: namespace
+        - sourceLabels: [__meta_kubernetes_pod_name]
+          targetLabel: pod
+      metricRelabelings:
+        - sourceLabels: [service]
+          regex: (.*)
+          targetLabel: service
+          replacement: ${1}
+        - sourceLabels: [namespace]
+          regex: (.*)
+          targetLabel: env
+          replacement: ${1}
+
+---
+# ServiceMonitor for Quantum Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: quantum-service-monitor
+  namespace: quantumflow
+  labels:
+    app: quantum-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: quantum-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 5s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: quantum-service
+        - sourceLabels: [__meta_kubernetes_pod_label_version]
+          targetLabel: version
+      metricRelabelings:
+        - regex: 'env_(.*)'
+          action: labeldrop
+
+---
+# ServiceMonitor for Auth Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: auth-service-monitor
+  namespace: quantumflow
+  labels:
+    app: auth-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: auth-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: auth-service
+
+---
+# ServiceMonitor for User Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: user-service-monitor
+  namespace: quantumflow
+  labels:
+    app: user-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: user-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: user-service
+
+---
+# ServiceMonitor for Payment Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: payment-service-monitor
+  namespace: quantumflow
+  labels:
+    app: payment-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: payment-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: payment-service
+
+---
+# ServiceMonitor for Analytics Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: analytics-service-monitor
+  namespace: quantumflow
+  labels:
+    app: analytics-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: analytics-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: analytics-service
+
+---
+# ServiceMonitor for File Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: file-service-monitor
+  namespace: quantumflow
+  labels:
+    app: file-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: file-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: file-service
+
+---
+# ServiceMonitor for Notification Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: notification-service-monitor
+  namespace: quantumflow
+  labels:
+    app: notification-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: notification-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: notification-service
+
+---
+# ServiceMonitor for Audit Service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: audit-service-monitor
+  namespace: quantumflow
+  labels:
+    app: audit-service
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: audit-service
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: audit-service
+
+---
+# ServiceMonitor for API Gateway
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-gateway-monitor
+  namespace: quantumflow
+  labels:
+    app: api-gateway
+    component: monitoring
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+  namespaceSelector:
+    matchNames:
+      - quantumflow
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 5s
+      honorLabels: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+          targetLabel: service
+          replacement: api-gateway
