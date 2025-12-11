@@ -1,6 +1,14 @@
 // 🔄 AETHERIUS-ETERNAL DISASTER RECOVERY
 // Enterprise-grade disaster recovery and business continuity
 
+export interface DisasterRecoveryConfig {
+  backup: BackupStrategy;
+  replication: ReplicationConfig;
+  failover: FailoverConfig;
+  recovery: RecoveryProcedures;
+  testing: DisasterRecoveryTesting;
+}
+
 export interface DisasterRecovery {
   backup: BackupStrategy;
   replication: ReplicationConfig;
@@ -233,9 +241,9 @@ export class DisasterRecoveryManager {
           notification: 'within-1-hour'
         },
         recovery: {
-          system-rebuild: 'from-scratch',
-          data-restoration: 'from-backup',
-          security-hardening: 'enhanced'
+          'system-rebuild': 'from-scratch',
+          'data-restoration': 'from-backup',
+          'security-hardening': 'enhanced'
         }
       }
     };
@@ -260,9 +268,9 @@ export class DisasterRecoveryManager {
       metrics: {
         rto: 'recovery-time-objective',
         rpo: 'recovery-point-objective',
-        successRate: 'test-success-rate',
-        identificationTime: 'time-to-identify',
-        resolutionTime: 'time-to-resolve'
+        'successRate': 'test-success-rate',
+        'identificationTime': 'time-to-identify',
+        'resolutionTime': 'time-to-resolve'
       }
     };
   }
@@ -289,9 +297,9 @@ export class DisasterRecoveryManager {
       testId: testResult.id,
       status: 'completed',
       success: testResult.success,
-      failoverTime: testResult.duration,
-      dataValidation: testResult.dataValidation,
-      rollbackTest: testResult.rollbackTest
+      'failoverTime': testResult.duration,
+      'dataValidation': testResult.dataValidation,
+      'rollbackTest': testResult.rollbackTest
     };
   }
 
@@ -300,11 +308,11 @@ export class DisasterRecoveryManager {
     const recovery = await this.executeRecoveryPlan(disasterType);
     
     return {
-      recoveryId: recovery.id,
-      disasterType: disasterType,
+      'recoveryId': recovery.id,
+      'disasterType': disasterType,
       status: 'in_progress',
-      startTime: new Date(),
-      estimatedCompletion: recovery.estimatedCompletion,
+      'startTime': new Date(),
+      'estimatedCompletion': recovery.estimatedCompletion,
       steps: recovery.steps
     };
   }
@@ -590,6 +598,14 @@ export interface Backup {
   type: BackupType;
   status: string;
   startTime: Date;
+}
+
+export interface FailoverTest {
+  id: string;
+  success: boolean;
+  duration: number;
+  dataValidation: boolean;
+  rollbackTest: boolean;
 }
 
 export class FailoverManager {
