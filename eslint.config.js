@@ -4,7 +4,6 @@ import typescriptParser from '@typescript-eslint/parser';
 
 export default [
   js.configs.recommended,
-  js.configs.recommendedTypescript,
   {
     files: ['**/*.{js,ts,tsx}'],
     languageOptions: {
