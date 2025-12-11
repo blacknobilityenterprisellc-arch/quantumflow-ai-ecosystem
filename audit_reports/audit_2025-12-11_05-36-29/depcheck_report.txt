@@ -1,0 +1,8 @@
+Unused devDependencies
+* depcheck
+* eslint-config-prettier
+* eslint-plugin-prettier
+* eslint-plugin-react-hooks
+* retire
+Missing dependencies
+* @eslint/js: ./eslint.config.js

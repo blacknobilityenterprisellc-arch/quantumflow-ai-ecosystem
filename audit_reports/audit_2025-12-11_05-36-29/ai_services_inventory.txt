@@ -1,0 +1,13 @@
+./src/types/index.ts:export interface AIResponse {
+./src/types/index.ts:export interface ServiceMetrics {
+./src/types/index.ts:export interface ServiceConfig {
+./src/types/index.ts:export interface Microservice {
+./src/types/index.ts:// Export all types for global availability
+./src/disaster-recovery/production-dr.ts:export interface FailoverConfig {
+./src/disaster-recovery/production-dr.ts:export interface FailoverTestResult {
+./src/disaster-recovery/production-dr.ts:export type DisasterType = 'data-center-failure' | 'database-corruption' | 'security-breach' | 'network-outage' | 'power-failure' | 'natural-disaster';
+./src/disaster-recovery/production-dr.ts:export class FailoverManager {
+./src/app/page.tsx:    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+./src/app/page.tsx:      <div className="container mx-auto px-4 py-8">
+./src/app/page.tsx:            <p className="text-sm">QuantumFlow AI Ecosystem v15.4.0</p>
+./src/patterns/ddd.ts:export interface DomainEvent {
