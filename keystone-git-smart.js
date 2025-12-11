@@ -8,7 +8,7 @@
  * and smart commit message generation.
  */
 
-const { Command } = require('commander');
+import { Command } from('commander');
 const { Chalk } = require('chalk');
 const { execSync } = require('child_process');
 const fs = require('fs');
