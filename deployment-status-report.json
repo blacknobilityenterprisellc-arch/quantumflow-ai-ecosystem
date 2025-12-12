@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-12T10:13:09.750Z",
+  "version": "v17.0.0-unified-global",
+  "projectRoot": "/home/z/unified-quantumflow-keystone",
+  "readinessScore": 80,
+  "criticalFiles": [
+    {
+      "name": "package.json",
+      "exists": true
+    },
+    {
+      "name": "vercel.json",
+      "exists": true
+    },
+    {
+      "name": "next.config.ts",
+      "exists": true
+    },
+    {
+      "name": ".env.production",
+      "exists": true
+    },
+    {
+      "name": "src/app/api/health/route.ts",
+      "exists": true
+    }
+  ],
+  "buildStatus": {
+    "completed": false,
+    "size": 0,
+    "lastModified": null
+  },
+  "recommendations": [
+    "Authenticate with Vercel CLI",
+    "Link project to Vercel account",
+    "Deploy to global network",
+    "Set environment variables in Vercel dashboard",
+    "Verify deployment health endpoint"
+  ]
+}
