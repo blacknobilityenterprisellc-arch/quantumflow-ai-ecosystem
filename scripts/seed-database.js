@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * AETHERIUS-ETERNAL Database Migration & Seeding Script
+ * AETHERIUS-ETERNAL Database Seeding Script
  * Keystone Architecture - v17.0.1
  * Neon PostgreSQL & Supabase Integration
  */
@@ -9,10 +9,10 @@
 import { PrismaClient } from '@prisma/client';
 import { neonDb } from '../src/lib/database.js';
 
-console.log('🚀 AETHERIUS-ETERNAL Database Migration & Seeding');
+console.log('🚀 AETHERIUS-ETERNAL Database Seeding');
 console.log('📋 Keystone Architecture - v17.0.1');
 console.log('🗄️  Neon PostgreSQL & Supabase Integration');
-console.log('=' .repeat(80));
+console.log('='.repeat(80));
 
 // AI Models Data
 const aiModels = [
@@ -22,7 +22,7 @@ const aiModels = [
     modelId: 'gpt-4-turbo-preview',
     version: '1.0',
     isActive: true,
-    capabilities: ['text', 'code', 'analysis'],
+    capabilities: 'text,code,analysis',
     maxTokens: 128000,
     pricing: {
       input: 0.01,
@@ -41,7 +41,7 @@ const aiModels = [
     modelId: 'claude-3-5-sonnet-20241022',
     version: '1.0',
     isActive: true,
-    capabilities: ['text', 'code', 'analysis', 'vision'],
+    capabilities: 'text,code,analysis,vision',
     maxTokens: 200000,
     pricing: {
       input: 0.003,
@@ -60,7 +60,7 @@ const aiModels = [
     modelId: 'gemini-1.5-pro',
     version: '1.0',
     isActive: true,
-    capabilities: ['text', 'code', 'vision', 'audio', 'video'],
+    capabilities: 'text,code,analysis,vision,audio,video',
     maxTokens: 2097152,
     pricing: {
       input: 0.00125,
@@ -71,44 +71,6 @@ const aiModels = [
       description: 'Multimodal model with massive context window',
       contextLength: 2097152,
       knowledgeCutoff: '2024-05'
-    }
-  },
-  {
-    name: 'Llama 3.1 70B',
-    provider: 'Ollama',
-    modelId: 'llama3.1:70b',
-    version: '1.0',
-    isActive: true,
-    capabilities: ['text', 'code'],
-    maxTokens: 128000,
-    pricing: {
-      input: 0,
-      output: 0,
-      per: 'self-hosted'
-    },
-    metadata: {
-      description: 'Open source model with excellent performance',
-      contextLength: 128000,
-      knowledgeCutoff: '2024-06'
-    }
-  },
-  {
-    name: 'Command R+',
-    provider: 'Cohere',
-    modelId: 'command-r-plus',
-    version: '1.0',
-    isActive: true,
-    capabilities: ['text', 'code', 'rag'],
-    maxTokens: 128000,
-    pricing: {
-      input: 0.003,
-      output: 0.015,
-      per: '1K tokens'
-    },
-    metadata: {
-      description: 'Enterprise model optimized for RAG and tool use',
-      contextLength: 128000,
-      knowledgeCutoff: '2024-04'
     }
   }
 ];
@@ -164,10 +126,17 @@ QuantumFlow AI represents the pinnacle of artificial intelligence integration, b
 
 ## Features
 
-- **Multi-Model Reasoning**: Leverage the strengths of different AI models for optimal results
-- **Real-time Collaboration**: Work together with AI in real-time
-- **Enterprise Security**: Quantum-grade encryption protects your data
-- **Global Performance**: Sub-50ms response times worldwide
+### 🤖 Multi-Model Reasoning
+Leverage strengths of different AI models for optimal results
+
+### 🔌 Real-time Collaboration
+Work together with AI in real-time conversations
+
+### 🛡️ Enterprise Security
+Quantum-grade encryption protects your data
+
+### 📈 Performance Analytics
+Comprehensive monitoring and usage metrics
 
 ## Getting Started
 
@@ -175,7 +144,7 @@ QuantumFlow AI represents the pinnacle of artificial intelligence integration, b
 2. Start your conversation
 3. Experience the future of AI interaction
 
-Welcome to the future of artificial intelligence.`,
+Welcome to the future of artificial intelligence!`,
     type: 'BLOG',
     status: 'PUBLISHED',
     authorId: 'admin-user-id',
@@ -184,7 +153,7 @@ Welcome to the future of artificial intelligence.`,
     publishedAt: new Date(),
     metadata: {
       seoTitle: 'Welcome to QuantumFlow AI - Future of AI Integration',
-      seoDescription: 'Experience the most advanced AI platform with 50+ models integrated',
+      seoDescription: 'Experience the most advanced AI platform with 50+ integrated models',
       readTime: 3
     }
   },
@@ -201,25 +170,21 @@ Choosing the right AI model is crucial for optimal results. Here's our comprehen
 - **Best for**: Complex reasoning, code generation
 - **Context**: 128K tokens
 - **Strengths**: Logical reasoning, mathematics
+- **Use Cases**: Complex problem solving, programming
 
 ### Claude 3.5 Sonnet
 - **Best for**: Creative writing, analysis
 - **Context**: 200K tokens
 - **Strengths**: Nuanced understanding, safety
+- **Use Cases**: Content creation, critical analysis
 
 ## Multimodal Models
 
 ### Gemini 1.5 Pro
 - **Best for**: Vision, audio, video analysis
 - **Context**: 2M tokens
-- **Strengths**: Massive context, multimodal
-
-## Open Source Options
-
-### Llama 3.1 70B
-- **Best for**: Privacy, customization
-- **Context**: 128K tokens
-- **Strengths**: No data transmission, self-hosted
+- **Strengths**: Massive context, multimodal understanding
+- **Use Cases**: Image analysis, video processing, audio transcription
 
 Choose the model that best fits your specific needs!`,
     type: 'DOCUMENTATION',
@@ -240,13 +205,27 @@ async function seedDatabase() {
   console.log('🌱 Starting database seeding...');
   
   try {
+    // Check database connection
+    await neonDb.$connect();
+    console.log('✅ Connected to Neon PostgreSQL database');
+
     // Seed AI Models
     console.log('📊 Seeding AI Models...');
     for (const model of aiModels) {
       await neonDb.aIModel.upsert({
         where: { modelId: model.modelId },
-        update: model,
-        create: model
+        update: {
+          name: model.name,
+          provider: model.provider,
+          modelId: model.modelId,
+          version: model.version,
+          isActive: model.isActive,
+          capabilities: model.capabilities,
+          maxTokens: model.maxTokens,
+          pricing: model.pricing,
+          metadata: model.metadata,
+          createdAt: new Date()
+        }
       });
     }
     console.log(`✅ Seeded ${aiModels.length} AI models`);
@@ -256,8 +235,12 @@ async function seedDatabase() {
     for (const config of systemConfig) {
       await neonDb.systemConfig.upsert({
         where: { key: config.key },
-        update: config,
-        create: config
+        update: {
+          value: config.value,
+          category: config.category,
+          isActive: config.isActive,
+          createdAt: new Date()
+        }
       });
     }
     console.log(`✅ Seeded ${systemConfig.length} system configurations`);
@@ -267,8 +250,18 @@ async function seedDatabase() {
     for (const content of sampleContent) {
       await neonDb.content.upsert({
         where: { slug: content.slug },
-        update: content,
-        create: content
+        update: {
+          title: content.title,
+          slug: content.slug,
+          content: content.content,
+          type: content.type,
+          status: content.status,
+          authorId: content.authorId,
+          featured: content.featured,
+          tags: content.tags,
+          metadata: content.metadata,
+          publishedAt: content.publishedAt
+        }
       });
     }
     console.log(`✅ Seeded ${sampleContent.length} content items`);
@@ -278,12 +271,6 @@ async function seedDatabase() {
     const adminUser = await neonDb.user.upsert({
       where: { email: 'admin@quantumflow.ai' },
       update: {
-        name: 'QuantumFlow Admin',
-        role: 'ADMIN',
-        subscription: 'ENTERPRISE'
-      },
-      create: {
-        email: 'admin@quantumflow.ai',
         name: 'QuantumFlow Admin',
         role: 'ADMIN',
         subscription: 'ENTERPRISE',
@@ -304,7 +291,7 @@ async function seedDatabase() {
         keyHash: 'admin-key-hash-placeholder',
         keyPrefix: 'ak_admin_',
         name: 'Admin API Key',
-        scopes: ['read', 'write', 'admin'],
+        scopes: 'read,write,admin',
         isActive: true
       }
     });
@@ -321,6 +308,9 @@ async function seedDatabase() {
   } catch (error) {
     console.error('❌ Database seeding failed:', error);
     throw error;
+  } finally {
+    await neonDb.$disconnect();
+    console.log('🔌 Database connection closed');
   }
 }
 
@@ -336,6 +326,7 @@ async function main() {
 
     console.log('\n🌟 AETHERIUS-ETERNAL Database Protocol: SEEDING COMPLETE');
     console.log('🚀 QuantumFlow AI: DATABASE READY FOR PRODUCTION');
+    console.log('🌟 KEYSTONE ARCHITECTURE: DATABASE SEEDING SUCCESSFUL');
 
   } catch (error) {
     console.error('❌ Database seeding failed:', error);
@@ -346,7 +337,7 @@ async function main() {
   }
 }
 
-// Run the seeding script
+// Run the seeding script if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
