@@ -31,7 +31,7 @@ export default function Home() {
       icon: Brain,
       title: 'Advanced AI Models',
       description: 'Access cutting-edge AI models including GPT-4, Claude, and more for intelligent conversations.',
-      badge: 'Powered by Z.ai'
+      badge: 'Powered by QuantumFlow AI'
     },
     {
       icon: Zap,

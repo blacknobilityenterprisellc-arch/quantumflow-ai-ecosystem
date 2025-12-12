@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: false,
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client']
+    serverExternalPackages: ['@prisma/client']
   }
 };
 
