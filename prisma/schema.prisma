@@ -12,17 +12,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Primary Database: Neon PostgreSQL
+// Primary Database: SQLite for local development
 datasource db {
-  provider = "postgresql"
-  url      = env("NEON_DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
-// Supabase Database (Backup/Analytics)
-datasource supabase {
-  provider = "postgresql"
-  url      = env("SUPABASE_DATABASE_URL")
-}
+// Supabase Database (Backup/Analytics) - Disabled for local dev
+// datasource supabase {
+//   provider = "postgresql"
+//   url      = env("SUPABASE_DATABASE_URL")
+// }
 
 // AI Model Management
 model AIModel {
@@ -32,7 +32,7 @@ model AIModel {
   modelId     String   // gpt-4, claude-3, etc.
   version     String   @default("1.0")
   isActive    Boolean  @default(true)
-  capabilities String[] // ["text", "image", "code", "audio"]
+  capabilities String   @default("text,image,code,audio") // Comma-separated for SQLite
   maxTokens   Int?
   pricing     Json?    // Pricing information
   metadata    Json?    // Additional model metadata
@@ -48,13 +48,16 @@ model AIConversation {
   userId      String?
   sessionId   String   @unique
   modelId     String
-  messages    Json[]   // Array of message objects
+  messages    Json     // JSON array of message objects for SQLite
   totalTokens Int      @default(0)
   cost        Float    @default(0.0)
   status      String   @default("active") // active, completed, error
   metadata    Json?    // Additional conversation metadata
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("ai_conversations")
 }
@@ -67,13 +70,15 @@ model User {
   avatar        String?
   role          UserRole  @default(USER)
   subscription  Subscription @default(FREE)
-  apiKeys       ApiKey[]
-  conversations AIConversation[]
   preferences   Json?     // User preferences
   metadata      Json?     // Additional user metadata
   lastActiveAt  DateTime? @default(now())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // Relations
+  apiKeys       ApiKey[]
+  conversations AIConversation[]
 
   @@map("users")
 }
@@ -85,12 +90,15 @@ model ApiKey {
   keyHash   String   @unique // Hashed API key
   keyPrefix String   // First few characters for identification
   name      String   // User-defined name for the key
-  scopes     String[] // ["read", "write", "admin"]
+  scopes     String   @default("read,write") // Comma-separated for SQLite
   isActive  Boolean  @default(true)
   lastUsed  DateTime?
   expiresAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("api_keys")
 }
@@ -106,7 +114,7 @@ model Content {
   status      ContentStatus @default(DRAFT)
   authorId    String
   featured    Boolean     @default(false)
-  tags        String[]
+  tags        String      @default("") // Comma-separated for SQLite
   metadata    Json?       // SEO, social media, etc.
   publishedAt DateTime?
   createdAt   DateTime    @default(now())
