@@ -18,6 +18,8 @@ import {
 } from 'lucide-react'
 
 export function Navigation() {
+  const { data: session, status } = useSession()
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,13 +53,51 @@ export function Navigation() {
               v17.0
             </Badge>
             
-            <Link href="/chat">
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Try AI Chat
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            {status === 'loading' ? (
+              <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
+            ) : session ? (
+              <div className="flex items-center gap-3">
+                <Link href="/chat">
+                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Try AI Chat
+                  </Button>
+                </Link>
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback>
+                      {session.user?.name?.charAt(0) || <User className="h-4 w-4" />}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hidden sm:block text-sm font-medium">
+                    {session.user?.name || 'User'}
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => signOut()}
+                    className="h-8 w-8 p-0"
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link href="/chat">
+                  <Button variant="outline" className="hidden sm:flex">
+                    <MessageSquare className="mr-2 h-4 w-4" />
+                    Try AI Chat
+                  </Button>
+                </Link>
+                <Link href="/auth/signin">
+                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
