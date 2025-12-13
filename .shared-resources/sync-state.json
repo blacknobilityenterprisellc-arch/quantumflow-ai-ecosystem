@@ -20,5 +20,8 @@
       "quantumflow_commit": "ec2086068c3e017d7c917888850fc8590133a768",
       "keystone_commit": "313cff702ae9594ba7792abfc1acb4c188386961"
     }
-  ]
+  ],
+  "coherence_score": "100",
+  "sync_mode": "aetherius-eternal",
+  "aetherius_protocol": "complete"
 }
