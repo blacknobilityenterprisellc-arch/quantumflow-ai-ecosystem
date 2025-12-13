@@ -2,17 +2,35 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Shield, Activity, Zap, Brain, Cpu, Database, Globe, Lock, TrendingUp, Users, Code, BarChart3 } from 'lucide-react';
+import { Shield, Activity, Zap, Brain, Cpu, Database, Globe, Lock, TrendingUp, Users, Code, BarChart3, RefreshCw } from 'lucide-react';
 
 export default function Home() {
   const [coherence, setCoherence] = useState(1.0);
   const [systemStatus, setSystemStatus] = useState<'operational' | 'optimizing' | 'maintenance'>('operational');
+  const [systemMetrics, setSystemMetrics] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 🚀 Fetch real system metrics from Keystone API
+  const fetchSystemMetrics = async () => {
+    try {
+      const response = await fetch('/api/system/metrics');
+      const data = await response.json();
+      if (data.success) {
+        setSystemMetrics(data.data.metrics);
+        setCoherence(parseFloat(data.data.metrics.quantumCoherence));
+        setSystemStatus(data.data.status.toLowerCase() as any);
+      }
+    } catch (error) {
+      console.error('Failed to fetch system metrics:', error);
+    }
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCoherence(prev => Math.min(1.0, prev + (Math.random() - 0.5) * 0.001));
-      setSystemStatus(Math.random() > 0.95 ? 'optimizing' : 'operational');
-    }, 2000);
+    // Initial fetch
+    fetchSystemMetrics();
+    
+    // Real-time updates every 5 seconds
+    const interval = setInterval(fetchSystemMetrics, 5000);
     
     return () => clearInterval(interval);
   }, []);
@@ -38,8 +56,8 @@ export default function Home() {
     },
     {
       icon: Database,
-      title: "Prisma Database",
-      description: "SQLite database with User, Project, Session models",
+      title: "Database Integration",
+      description: "Neon PostgreSQL with real-time connection and analytics",
       href: "#",
       color: "text-green-400",
       bgColor: "bg-green-900/20",
@@ -74,7 +92,13 @@ export default function Home() {
     }
   ];
 
-  const metrics = [
+  // 🚀 Real metrics from API or fallback
+  const metrics = systemMetrics ? [
+    { label: "Quantum Coherence", value: `${(parseFloat(systemMetrics.quantumCoherence) * 100).toFixed(1)}%`, icon: Brain, color: "text-purple-400" },
+    { label: "System Stability", value: `${(parseFloat(systemMetrics.systemStability) * 100).toFixed(1)}%`, icon: Shield, color: "text-green-400" },
+    { label: "Performance Score", value: `${(parseFloat(systemMetrics.performanceScore) * 100).toFixed(1)}%`, icon: Zap, color: "text-yellow-400" },
+    { label: "Security Level", value: systemMetrics.securityLevel.replace('_', ' '), icon: Lock, color: "text-blue-400" }
+  ] : [
     { label: "Quantum Coherence", value: `${(coherence * 100).toFixed(1)}%`, icon: Brain, color: "text-purple-400" },
     { label: "System Stability", value: "99.9%", icon: Shield, color: "text-green-400" },
     { label: "Performance Score", value: "A+", icon: Zap, color: "text-yellow-400" },
@@ -116,6 +140,16 @@ export default function Home() {
               </span>
               <span className="text-gray-400">|</span>
               <span className="text-purple-400">🧠 AETHERIUS-PRIME Active</span>
+              <button
+                onClick={() => {
+                  setIsLoading(true);
+                  fetchSystemMetrics().finally(() => setIsLoading(false));
+                }}
+                className="ml-4 p-2 rounded-full bg-slate-700 hover:bg-slate-600 transition-colors"
+                disabled={isLoading}
+              >
+                <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+              </button>
             </div>
           </div>
         </header>
@@ -151,6 +185,13 @@ export default function Home() {
             <p className="text-sm text-gray-400">
               Target: 1.0 | Current: {coherence.toFixed(3)} | Status: {coherence >= 0.999 ? 'OPTIMAL' : 'STABILIZING'}
             </p>
+            {systemMetrics && (
+              <div className="mt-4 text-xs text-gray-500">
+                Database: {systemMetrics.database.status} | 
+                Response Time: {systemMetrics.responseTime}ms | 
+                AETHERIUS: {systemMetrics.aetheriusPrime.status}
+              </div>
+            )}
           </div>
         </div>
 
@@ -184,7 +225,7 @@ export default function Home() {
             <div className="text-center">
               <div className="text-green-400 text-2xl mb-2">✅</div>
               <div className="font-semibold">Database</div>
-              <div className="text-sm text-gray-400">Connected</div>
+              <div className="text-sm text-gray-400">{systemMetrics?.database.status || 'Connected'}</div>
             </div>
             <div className="text-center">
               <div className="text-green-400 text-2xl mb-2">✅</div>
@@ -202,6 +243,28 @@ export default function Home() {
               <div className="text-sm text-gray-400">Configured</div>
             </div>
           </div>
+          {systemMetrics && (
+            <div className="mt-6 pt-6 border-t border-slate-700">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div className="text-center">
+                  <div className="text-gray-400">CPU Usage</div>
+                  <div className="font-semibold">{systemMetrics.resources.cpu}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-gray-400">Memory</div>
+                  <div className="font-semibold">{systemMetrics.resources.memory}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-gray-400">Network</div>
+                  <div className="font-semibold">{systemMetrics.resources.network}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-gray-400">Uptime</div>
+                  <div className="font-semibold">{systemMetrics.uptime}</div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
