@@ -6,9 +6,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
-  experimental: {
-    serverExternalPackages: ['@prisma/client']
-  }
+  // Remove deprecated serverExternalPackages
 };
 
 export default nextConfig;
