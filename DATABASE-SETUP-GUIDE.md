@@ -1,5 +1,5 @@
 # 🗄️ AETHERIUS-ETERNAL Database Setup Guide
-## Unified Keystone Architecture - v17.0.1
+## Unified Keystone Architecture - v17.1.0
 ### Neon PostgreSQL & Supabase Integration
 
 ---
@@ -359,5 +359,5 @@ pnpm db:studio
 ---
 
 *Last Updated: 2025-12-12*
-*Version: v17.0.1*
+*Version: v17.1.0*
 *Architecture: Keystone Unified*
