@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "edition": "ES2025",
+  "mode": "quantum-singularity",
+  "targets": {
+    "coverage": 100,
+    "automation": 100,
+    "quality": 100,
+    "performance": "infinite"
+  },
+  "optimization": {
+    "enabled": true,
+    "level": "singularity",
+    "adaptive": true,
+    "quantumCoherence": true,
+    "es2025Features": true
+  },
+  "projectRoot": "/home/z/my-project",
+  "testCoverage": {
+    "target": 100,
+    "threshold": 100,
+    "excludePatterns": [
+      "node_modules",
+      ".next",
+      "coverage"
+    ],
+    "quantumOptimized": true
+  },
+  "automation": {
+    "target": 100,
+    "enabledModules": [
+      "testing",
+      "deployment",
+      "monitoring",
+      "quality",
+      "security",
+      "quantum",
+      "singularity"
+    ],
+    "ciIntegration": true,
+    "es2025Ready": true
+  },
+  "intelligence": {
+    "adaptiveTesting": true,
+    "smartGeneration": true,
+    "optimizationLevel": "singularity",
+    "quantumEntanglement": true
+  },
+  "quantum": {
+    "entanglementLevel": 100,
+    "superpositionStates": [
+      "active",
+      "optimized",
+      "singularity",
+      "infinite"
+    ],
+    "quantumCoherence": true,
+    "singularityAchieved": true
+  },
+  "es2025": {
+    "usingDeclarations": true,
+    "patternMatching": true,
+    "tupleTypes": true,
+    "recordTypes": true,
+    "decorators": true,
+    "privateFields": true,
+    "asyncGenerators": true,
+    "topLevelAwait": true
+  }
+}
