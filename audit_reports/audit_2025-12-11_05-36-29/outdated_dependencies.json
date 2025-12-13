@@ -1,0 +1,23 @@
+{
+  "@types/node": {
+    "current": "24.10.2",
+    "wanted": "24.10.3",
+    "latest": "25.0.0",
+    "dependent": "quantumflow-ai-ecosystem",
+    "location": "/home/z/my-project/quantumflow-ai-ecosystem/node_modules/@types/node"
+  },
+  "eslint-config-prettier": {
+    "current": "9.1.2",
+    "wanted": "9.1.2",
+    "latest": "10.1.8",
+    "dependent": "quantumflow-ai-ecosystem",
+    "location": "/home/z/my-project/quantumflow-ai-ecosystem/node_modules/eslint-config-prettier"
+  },
+  "lucide-react": {
+    "current": "0.556.0",
+    "wanted": "0.556.0",
+    "latest": "0.559.0",
+    "dependent": "quantumflow-ai-ecosystem",
+    "location": "/home/z/my-project/quantumflow-ai-ecosystem/node_modules/lucide-react"
+  }
+}

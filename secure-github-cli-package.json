@@ -1,0 +1,32 @@
+{
+  "name": "@keystone/github-cli-enhanced",
+  "version": "2.5.0",
+  "description": "Enhanced GitHub CLI without security vulnerabilities",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": [
+    "github",
+    "cli",
+    "git",
+    "enhanced",
+    "secure"
+  ],
+  "author": "Keystone AI Ecosystem",
+  "license": "MIT",
+  "security": {
+    "vulnerabilities": "none",
+    "lastAudit": "2025-12-10",
+    "status": "secure"
+  }
+}

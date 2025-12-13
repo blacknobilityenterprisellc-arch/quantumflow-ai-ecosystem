@@ -1,197 +1,53 @@
-// AETHERIUS-ETERNAL Unified Database Schema
-// Keystone Architecture - v17.0.1
-// Supports Neon PostgreSQL & Supabase
-
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
 }
 
-// Primary Database: SQLite for local development
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
 }
 
-// Supabase Database (Backup/Analytics) - Disabled for local dev
-// datasource supabase {
-//   provider = "postgresql"
-//   url      = env("SUPABASE_DATABASE_URL")
-// }
-
-// AI Model Management
-model AIModel {
-  id          String   @id @default(cuid())
-  name        String
-  provider    String   // OpenAI, Anthropic, Google AI, etc.
-  modelId     String   // gpt-4, claude-3, etc.
-  version     String   @default("1.0")
-  isActive    Boolean  @default(true)
-  capabilities String   @default("text,image,code,audio") // Comma-separated for SQLite
-  maxTokens   Int?
-  pricing     Json?    // Pricing information
-  metadata    Json?    // Additional model metadata
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("ai_models")
-}
-
-// AI Conversation History
-model AIConversation {
-  id          String   @id @default(cuid())
-  userId      String?
-  sessionId   String   @unique
-  modelId     String
-  messages    Json     // JSON array of message objects for SQLite
-  totalTokens Int      @default(0)
-  cost        Float    @default(0.0)
-  status      String   @default("active") // active, completed, error
-  metadata    Json?    // Additional conversation metadata
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  @@map("ai_conversations")
-}
-
-// User Management with Enhanced Features
+// QuantumFlow AI Ecosystem Models
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String?
-  avatar        String?
-  role          UserRole  @default(USER)
-  subscription  Subscription @default(FREE)
-  preferences   Json?     // User preferences
-  metadata      Json?     // Additional user metadata
-  lastActiveAt  DateTime? @default(now())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
   // Relations
-  apiKeys       ApiKey[]
-  conversations AIConversation[]
-
+  projects  Project[]
+  sessions  Session[]
+  
   @@map("users")
 }
 
-// API Key Management
-model ApiKey {
-  id        String   @id @default(cuid())
-  userId    String
-  keyHash   String   @unique // Hashed API key
-  keyPrefix String   // First few characters for identification
-  name      String   // User-defined name for the key
-  scopes     String   @default("read,write") // Comma-separated for SQLite
-  isActive  Boolean  @default(true)
-  lastUsed  DateTime?
-  expiresAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  status      String   @default("active")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("projects")
+}
 
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
   // Relations
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("api_keys")
-}
-
-// Content Management (Enhanced Posts)
-model Content {
-  id          String      @id @default(cuid())
-  title       String
-  slug        String     @unique
-  content     String?
-  excerpt     String?
-  type        ContentType @default(BLOG)
-  status      ContentStatus @default(DRAFT)
-  authorId    String
-  featured    Boolean     @default(false)
-  tags        String      @default("") // Comma-separated for SQLite
-  metadata    Json?       // SEO, social media, etc.
-  publishedAt DateTime?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  @@map("content")
-}
-
-// AI Model Performance Analytics
-model ModelPerformance {
-  id            String   @id @default(cuid())
-  modelId       String
-  userId        String?
-  requestType   String   // "text_generation", "image_generation", etc.
-  tokensUsed    Int      @default(0)
-  responseTime  Int      // Response time in milliseconds
-  success       Boolean  @default(true)
-  errorCode     String?
-  cost          Float    @default(0.0)
-  metadata      Json?    // Additional performance data
-  createdAt     DateTime @default(now())
-
-  @@map("model_performance")
-}
-
-// System Configuration
-model SystemConfig {
-  id        String   @id @default(cuid())
-  key       String   @unique
-  value     Json     // Configuration value (can be any JSON)
-  category  String   // "ai", "security", "performance", etc.
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("system_config")
-}
-
-// Audit Log for Security
-model AuditLog {
-  id        String   @id @default(cuid())
-  userId    String?
-  action    String   // "login", "api_call", "config_change", etc.
-  resource  String?  // Resource that was accessed/modified
-  metadata  Json?    // Additional audit data
-  ipAddress String?
-  userAgent String?
-  createdAt DateTime @default(now())
-
-  @@map("audit_logs")
-}
-
-// Enums
-enum UserRole {
-  USER
-  ADMIN
-  MODERATOR
-  DEVELOPER
-}
-
-enum Subscription {
-  FREE
-  PRO
-  ENTERPRISE
-}
-
-enum ContentType {
-  BLOG
-  DOCUMENTATION
-  TUTORIAL
-  NEWS
-  RESEARCH
-}
-
-enum ContentStatus {
-  DRAFT
-  REVIEW
-  PUBLISHED
-  ARCHIVED
+  
+  @@map("sessions")
 }

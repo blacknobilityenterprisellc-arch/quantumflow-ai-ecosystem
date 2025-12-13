@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# 🏢 KEYSTONE AI ECOSYSTEM WORKFLOW SHELL WRAPPER
+# Premium Diamond Grade - QuantumFlow Integration
+
+# Check if Node.js is available
+if ! command -v node &> /dev/null; then
+    echo "❌ Node.js is not installed or not in PATH"
+    exit 1
+fi
+
+# Check if keystone-workflow.js exists
+if [ ! -f "keystone-workflow.js" ]; then
+    echo "❌ keystone-workflow.js not found in current directory"
+    exit 1
+fi
+
+# Execute the keystone workflow
+node keystone-workflow.js "$@"
