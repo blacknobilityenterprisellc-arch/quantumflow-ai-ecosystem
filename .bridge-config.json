@@ -2,10 +2,10 @@
   "bridge_version": "1.0.0",
   "quantumflow_repo": "/home/z/my-project",
   "keystone_repo": "/home/z/my-project/keystone-ai-ecosystem-premium-diamond-grade",
-  "sync_mode": "bidirectional",
+  "sync_mode": "aetherius-eternal",
   "auto_sync": true,
-  "conflict_resolution": "quantum_enhanced",
-  "coherence_threshold": 80,
+  "conflict_resolution": "aetherius_quantum_enhanced",
+  "coherence_threshold": 100,
   "last_sync": null,
   "sync_history": []
 }
