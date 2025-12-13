@@ -1,14 +1,10 @@
 import { createServer } from 'http'
 import { Server as SocketIOServer } from 'socket.io'
-import cors from 'cors'
 import { v4 as uuidv4 } from 'uuid'
 import ZAI from 'z-ai-web-dev-sdk'
 
 const PORT = 3003
 const httpServer = createServer()
-
-// Enable CORS
-httpServer.on('request', cors())
 
 const io = new SocketIOServer(httpServer, {
   cors: {

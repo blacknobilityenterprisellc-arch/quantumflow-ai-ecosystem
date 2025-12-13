@@ -15,7 +15,7 @@ generator client {
 // Primary Database: SQLite for local development
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 // Supabase Database (Backup/Analytics) - Disabled for local dev
