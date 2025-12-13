@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# 🏢 KEYSTONE AI CLI/IDE SHELL WRAPPER
+# Premium Diamond Grade - Quantum Intelligence System
+
+# Check if Node.js is available
+if ! command -v node &> /dev/null; then
+    echo "❌ Node.js is not installed or not in PATH"
+    exit 1
+fi
+
+# Check if keystone-cli-ide.js exists
+if [ ! -f "keystone-cli-ide.js" ]; then
+    echo "❌ keystone-cli-ide.js not found in current directory"
+    exit 1
+fi
+
+# Display banner
+echo "🏢 KEYSTONE AI CLI/IDE v15.3.0"
+echo "💻 Premium Diamond Grade - Quantum Intelligence System"
+echo ""
+
+# Execute keystone CLI/IDE
+node keystone-cli-ide.js "$@"

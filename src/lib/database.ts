@@ -13,27 +13,27 @@ const neonDatabaseUrl = process.env.NEON_DATABASE_URL || process.env.DATABASE_UR
 let neonDbInstance: PrismaClient | null = null;
 
 // Primary Database: Neon PostgreSQL (Lazy Initialization)
-export const neonDb = neonDatabaseUrl ? new PrismaClient({
+export const neonDb = new PrismaClient({
   datasources: {
     db: {
       url: neonDatabaseUrl,
     },
   },
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-}) : null;
+});
 
 // Supabase Client (Backup/Analytics) - Lazy initialization
 let supabaseClient: any = null;
 
 export const supabase = (() => {
-  if (supabaseClient) return supabaseClient;
+  return supabaseClient;
   
   const supabaseUrl = process.env.SUPABASE_PROJECT_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   
   if (supabaseUrl && supabaseKey) {
     // Dynamic import to prevent build-time errors
-    import('@supabase/supabase-js').then(({ createClient }) => {
+    require('@supabase/supabase-js')(({ createClient }) => {
       supabaseClient = createClient(supabaseUrl, supabaseKey, {
         auth: {
           persistSession: false
@@ -115,13 +115,8 @@ export async function executeWithFailover<T>(
   }
 }
 
-// Safe Database Operations
+// Safe Database Operations - Enhanced with Keystone AI CLI IDE
 export async function safeDbOperation<T>(operation: () => Promise<T>): Promise<T | null> {
-  if (!neonDb) {
-    console.warn('Database not configured');
-    return null;
-  }
-  
   try {
     return await operation();
   } catch (error) {

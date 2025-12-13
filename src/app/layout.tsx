@@ -1,58 +1,53 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as SonnerToaster } from "@/components/ui/sonner";
-import { Providers } from "@/components/providers";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "QuantumFlow AI Ecosystem - Advanced AI Platform",
-  description: "Experience the next generation of AI-powered applications with QuantumFlow. Build, scale, and deploy intelligent solutions with unprecedented speed and reliability.",
-  keywords: ["QuantumFlow", "AI", "Artificial Intelligence", "Machine Learning", "Next.js", "TypeScript", "Enterprise AI", "Chat API", "Image Generation"],
-  authors: [{ name: "QuantumFlow AI Team" }],
-  icons: {
-    icon: "/logo.svg",
-  },
+  title: 'QuantumFlow AI Ecosystem v15.4.0 - AETHERIUS-PRIME Enhanced',
+  description: 'Premium Platinum Diamond Grade - Next.js 16.0.8 with Quantum Intelligence & AETHERIUS-ETERNAL Systems',
+  keywords: ['quantum-ai', 'nextjs', 'typescript', 'enterprise', 'aetherius-prime', 'keystone-ecosystem'],
+  authors: [{ name: 'Jocely P. Honore' }],
+  viewport: 'width=device-width, initial-scale=1',
+  robots: 'index, follow',
   openGraph: {
-    title: "QuantumFlow AI Ecosystem",
-    description: "The future of AI intelligence - Comprehensive platform for building intelligent applications",
-    url: "https://quantumflow.ai",
-    siteName: "QuantumFlow AI",
-    type: "website",
+    title: 'QuantumFlow AI Ecosystem v15.4.0',
+    description: 'Premium Platinum Diamond Grade Enterprise AI Platform',
+    type: 'website',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "QuantumFlow AI Ecosystem",
-    description: "Advanced AI platform for building intelligent applications at scale",
-  },
-};
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <Providers>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-        >
+    <html lang="en" className="dark">
+      <head>
+        <meta name="theme-color" content="#0f172a" />
+        <meta name="msapplication-TileColor" content="#0f172a" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+      </head>
+      <body className="antialiased bg-slate-900 text-white min-h-screen">
+        <div id="aetherius-prime-root" className="relative">
           {children}
-          <Toaster />
-          <SonnerToaster />
-        </body>
-      </html>
-    </Providers>
-  );
+        </div>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // AETHERIUS-PRIME Quantum Coherence Initialization
+              window.AETHERIUS_PRIME = {
+                version: '15.4.0',
+                mode: 'ACTIVE',
+                quantumCoherence: 0.999,
+                neuralSync: true,
+                eternalMode: true
+              };
+              console.log('🧠 AETHERIUS-PRIME Systems Initialized - Quantum Coherence:', window.AETHERIUS_PRIME.quantumCoherence);
+            `,
+          }}
+        />
+      </body>
+    </html>
+  )
 }
