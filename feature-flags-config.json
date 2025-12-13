@@ -1,0 +1,32 @@
+{
+  "version": "2025",
+  "flags": [
+    {
+      "key": "quantum-optimization",
+      "enabled": false,
+      "rolloutPercentage": 0,
+      "targeting": {
+        "users": [],
+        "attributes": [
+          "tier",
+          "region"
+        ]
+      }
+    },
+    {
+      "key": "es2025-features",
+      "enabled": true,
+      "rolloutPercentage": 100,
+      "environments": [
+        "development",
+        "staging"
+      ]
+    }
+  ],
+  "environments": [
+    "development",
+    "staging",
+    "production"
+  ],
+  "sdk": "launchdarkly-node-server-sdk"
+}

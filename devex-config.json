@@ -1,0 +1,20 @@
+{
+  "version": "2025",
+  "measurements": {
+    "deploymentFrequency": "daily",
+    "leadTimeForChanges": "hours",
+    "meanTimeToRecovery": "minutes",
+    "changeFailureRate": "low"
+  },
+  "optimizations": [
+    "parallel-builds",
+    "incremental-compilation",
+    "smart-caching",
+    "dependency-preloading"
+  ],
+  "developerSatisfaction": {
+    "surveyFrequency": "monthly",
+    "feedbackLoop": "continuous",
+    "improvementTarget": "10%"
+  }
+}

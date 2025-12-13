@@ -1,0 +1,17 @@
+{
+  "name": "microservice-template-2025",
+  "language": "TypeScript",
+  "runtime": "Node.js 22",
+  "features": [
+    "OpenTelemetry instrumentation",
+    "gRPC communication",
+    "Event-driven architecture",
+    "Security scanning",
+    "Progressive delivery"
+  ],
+  "infrastructure": {
+    "asCode": true,
+    "gitOps": true,
+    "observability": true
+  }
+}

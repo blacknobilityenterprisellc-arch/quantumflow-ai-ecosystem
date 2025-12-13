@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "exporters": {
+    "otlp": "http://otel-collector:4317",
+    "prometheus": "http://prometheus:9090",
+    "jaeger": "http://jaeger:14268"
+  },
+  "instruments": [
+    "@opentelemetry/api",
+    "@opentelemetry/sdk-node",
+    "@opentelemetry/auto-instrumentations"
+  ],
+  "resourceDetectors": [
+    "env",
+    "host",
+    "process",
+    "service"
+  ],
+  "sampling": {
+    "type": "traceidratio",
+    "probability": 0.1
+  }
+}

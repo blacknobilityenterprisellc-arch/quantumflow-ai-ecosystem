@@ -1,0 +1,19 @@
+{
+  "version": "2025",
+  "frameworks": [
+    "OWASP Top 10",
+    "NIST Cybersecurity Framework"
+  ],
+  "tools": {
+    "sast": "ESLint Security Plugin",
+    "dast": "OWASP ZAP Integration",
+    "sbom": "CycloneDX",
+    "sigstore": "sigstore-js",
+    "policyEngine": "Open Policy Agent"
+  },
+  "policies": {
+    "codeQuality": "strict",
+    "vulnerabilityThreshold": "zero",
+    "licenseCompliance": "enforced"
+  }
+}

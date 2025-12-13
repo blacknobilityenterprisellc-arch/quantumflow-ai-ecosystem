@@ -1,0 +1,22 @@
+{
+  "version": "2025",
+  "runtime": "WasmEdge",
+  "languages": {
+    "primary": "Rust",
+    "secondary": [
+      "Go",
+      "C++"
+    ],
+    "target": "wasm32-wasi"
+  },
+  "security": {
+    "sandboxing": true,
+    "capabilityModel": true,
+    "resourceLimits": true
+  },
+  "performance": {
+    "nearNativeSpeed": true,
+    "lowMemoryFootprint": true,
+    "fastStartup": true
+  }
+}
